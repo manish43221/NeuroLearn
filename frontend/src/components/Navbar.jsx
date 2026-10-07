@@ -1,0 +1,77 @@
+import { useState } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+
+const linkClass = ({ isActive }) =>
+  `whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium transition ${
+    isActive ? 'bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-200' : 'text-slate-600 hover:text-brand-600 dark:text-slate-400'
+  }`;
+
+export default function Navbar() {
+  const { user, logout } = useAuth();
+  const { dark, toggle } = useTheme();
+  const navigate = useNavigate();
+  const [q, setQ] = useState('');
+
+  const search = (e) => {
+    e.preventDefault();
+    navigate(`/courses?search=${encodeURIComponent(q.trim())}`);
+  };
+
+  return (
+    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur print:hidden dark:border-slate-800 dark:bg-slate-900/90">
+      <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3">
+        <Link to={user ? '/dashboard' : '/'} className="flex items-center gap-2 text-lg font-extrabold text-brand-600">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-base text-white">🧠</span>
+          NeuroLearn
+        </Link>
+
+        {user && (
+          <nav className="hidden items-center gap-1 md:flex">
+            <NavLink to="/dashboard" className={linkClass}>Dashboard</NavLink>
+            <NavLink to="/my-courses" className={linkClass}>My Courses</NavLink>
+            <NavLink to="/quizzes" className={linkClass}>Quizzes</NavLink>
+            <NavLink to="/performance" className={linkClass}>Performance</NavLink>
+            {user.role !== 'student' && <NavLink to="/manage" className={linkClass}>Manage</NavLink>}
+          </nav>
+        )}
+
+        <div className="ml-auto flex items-center gap-2">
+          {user && (
+            <form onSubmit={search} className="hidden lg:block">
+              <input className="input w-56 !py-1.5" placeholder="Search courses" value={q} onChange={(e) => setQ(e.target.value)} />
+            </form>
+          )}
+          <button onClick={toggle} className="rounded-lg p-2 text-lg hover:bg-slate-100 dark:hover:bg-slate-800" title="Toggle dark mode">
+            {dark ? '☀️' : '🌙'}
+          </button>
+          {user ? (
+            <>
+              <Link to="/profile" title="Profile" className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 font-bold text-white">
+                {user.name[0].toUpperCase()}
+              </Link>
+              <button className="btn-outline !py-1.5" onClick={() => { logout(); navigate('/'); }}>Logout</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="btn-outline !py-1.5">Login</Link>
+              <Link to="/register" className="btn-primary !py-1.5">Get started</Link>
+            </>
+          )}
+        </div>
+      </div>
+
+      {user && (
+        <nav className="flex gap-1 overflow-x-auto border-t border-slate-100 px-4 py-2 md:hidden dark:border-slate-800">
+          <NavLink to="/dashboard" className={linkClass}>Dashboard</NavLink>
+          <NavLink to="/courses" className={linkClass}>Courses</NavLink>
+          <NavLink to="/my-courses" className={linkClass}>My Courses</NavLink>
+          <NavLink to="/quizzes" className={linkClass}>Quizzes</NavLink>
+          <NavLink to="/performance" className={linkClass}>Performance</NavLink>
+          {user.role !== 'student' && <NavLink to="/manage" className={linkClass}>Manage</NavLink>}
+        </nav>
+      )}
+    </header>
+  );
+}
