@@ -67,6 +67,6 @@ All AI output is parsed and validated (4 options, valid answer index, no duplica
 Send `Authorization: Bearer <token>` on all routes except register/login.
 
 ## Deploy
-- Database: MongoDB Atlas → put the URI in `MONGO_URI`
+- Database: MongoDB Atlas → put  URI in `MONGO_URI`
 - Backend (Render/Railway): root `backend`, build `npm install`, start `npm start`; set env vars and `CLIENT_URL=https://your-frontend-url`
 - Frontend (Vercel/Netlify): root `frontend`, build `npm run build`, output `dist`; set `VITE_API_URL=https://your-backend-url/api`; add an SPA rewrite of all paths to `/index.html`
