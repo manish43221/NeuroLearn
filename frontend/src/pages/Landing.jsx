@@ -26,16 +26,22 @@ export default function Landing() {
         </div>
       </section>
 
-      <section className="page !py-16">
-        <h2 className="text-center text-3xl font-bold">Everything you need to improve</h2>
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((f) => (
-            <div key={f.title} className="card">
-              <div className="text-3xl">{f.icon}</div>
-              <h3 className="mt-3 font-semibold">{f.title}</h3>
-              <p className="mt-1 text-sm text-slate-500">{f.text}</p>
-            </div>
-          ))}
+      <section className="bg-slate-50 py-16 text-slate-800 transition-colors dark:bg-slate-950 dark:text-white">
+        <div className="page !py-0">
+          <h2 className="text-center text-3xl font-bold">Everything you need to improve</h2>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map((f) => (
+              <article
+                key={f.title}
+                tabIndex={0}
+                className="rounded-2xl border border-slate-200 bg-white p-5 transition duration-300 ease-out hover:z-10 hover:scale-[1.04] hover:border-brand-400/50 hover:shadow-xl hover:shadow-brand-950/10 focus-visible:z-10 focus-visible:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 dark:border-slate-800 dark:bg-[#111a2b] dark:hover:shadow-brand-950/30"
+              >
+                <div className="text-3xl">{f.icon}</div>
+                <h3 className="mt-3 font-semibold">{f.title}</h3>
+                <p className="mt-1 text-sm text-slate-400">{f.text}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

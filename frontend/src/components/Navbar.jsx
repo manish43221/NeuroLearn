@@ -43,7 +43,13 @@ export default function Navbar() {
               <input className="input w-56 !py-1.5" placeholder="Search courses" value={q} onChange={(e) => setQ(e.target.value)} />
             </form>
           )}
-          <button onClick={toggle} className="rounded-lg p-2 text-lg hover:bg-slate-100 dark:hover:bg-slate-800" title="Toggle dark mode">
+          <button
+            type="button"
+            onClick={toggle}
+            className="rounded-lg p-2 text-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+            title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
             {dark ? '☀️' : '🌙'}
           </button>
           {user ? (
