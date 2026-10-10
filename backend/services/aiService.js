@@ -139,4 +139,26 @@ async function generateQuiz(opts) {
   }
 }
 
-module.exports = { generateQuiz, parseAndValidate };
+
+// Generic helper used by tutor / study plan / flashcards. Returns null when no AI key is configured.
+async function askAI(prompt, { json = false } = {}) {
+  const provider = (process.env.AI_PROVIDER || 'mock').toLowerCase();
+  if (provider === 'gemini' && process.env.GEMINI_API_KEY) {
+    const model = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
+    const data = await fetchJson(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.6, ...(json && { responseMimeType: 'application/json' }) } }),
+    });
+    return data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join('') || null;
+  }
+  if (provider === 'openai' && process.env.OPENAI_API_KEY) {
+    const data = await fetchJson('https://api.openai.com/v1/chat/completions', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
+      body: JSON.stringify({ model: process.env.OPENAI_MODEL || 'gpt-4o-mini', temperature: 0.6, ...(json && { response_format: { type: 'json_object' } }), messages: [{ role: 'user', content: prompt }] }),
+    });
+    return data?.choices?.[0]?.message?.content || null;
+  }
+  return null;
+}
+
+module.exports = { generateQuiz, parseAndValidate, askAI };

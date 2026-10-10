@@ -1,5 +1,6 @@
 const Result = require('../models/Result');
 const User = require('../models/User');
+const Course = require('../models/Course');
 const ApiError = require('../utils/ApiError');
 const asyncHandler = require('../utils/asyncHandler');
 const { topicStats, streak, badges, WEAK } = require('../utils/analytics');
@@ -95,4 +96,27 @@ exports.getLeaderboard = asyncHandler(async (req, res) => {
       isMe: String(r._id) === String(req.user._id),
     }))
   );
+});
+
+// GET /api/results/students   (teacher/admin) -> performance of students on my courses
+exports.getStudents = asyncHandler(async (req, res) => {
+  const filter = {};
+  if (req.user.role === 'teacher') {
+    const ids = (await Course.find({ createdBy: req.user._id }).select('_id')).map((c) => c._id);
+    filter.course = { $in: ids };
+  }
+  const results = await Result.find(filter).sort('-createdAt').select('user score topicBreakdown course createdAt');
+  const byUser = new Map();
+  for (const r of results) byUser.set(String(r.user), [...(byUser.get(String(r.user)) || []), r]);
+  const users = await User.find({ _id: { $in: [...byUser.keys()] } }).select('name email');
+  const rows = users.map((u) => {
+    const list = byUser.get(String(u._id));
+    return {
+      _id: u._id, name: u.name, email: u.email, quizzes: list.length,
+      average: Math.round(list.reduce((s, r) => s + r.score, 0) / list.length),
+      lastActive: list[0].createdAt,
+      weakTopics: topicStats(list).filter((t) => t.level === 'weak' && t.total >= 2).slice(0, 3).map((t) => `${t.topic} (${t.accuracy}%)`),
+    };
+  });
+  res.json(rows.sort((a, b) => a.average - b.average));
 });
