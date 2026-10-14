@@ -43,13 +43,14 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="page space-y-6">
-      <div className="card flex flex-col items-start justify-between gap-4 !border-0 bg-gradient-to-r from-brand-600 to-purple-600 !text-white sm:flex-row sm:items-center">
+    <main className="dashboard-theme min-h-[calc(100vh-4rem)]">
+      <div className="page space-y-6">
+      <div className="dashboard-hero card flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h1 className="text-2xl font-bold">Welcome back, {user.name.split(' ')[0]} 👋</h1>
-          <p className="mt-1 text-brand-100">{rec ? rec.message : 'Enrol in a course and take your first AI quiz to get personalised insights.'}</p>
+          <p className="mt-1 text-slate-300">{rec ? rec.message : 'Enrol in a course and take your first AI quiz to get personalised insights.'}</p>
         </div>
-        <button onClick={takeQuiz} disabled={busy} className="btn bg-white text-brand-700 hover:bg-brand-50">{busy ? 'Generating...' : '✨ Take AI Quiz'}</button>
+        <button onClick={takeQuiz} disabled={busy} className="btn dashboard-action">{busy ? 'Generating...' : '✨ Take AI Quiz'}</button>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -72,11 +73,11 @@ export default function Dashboard() {
           {stats.scoreTrend.length ? (
             <ResponsiveContainer width="100%" height={240}>
               <LineChart data={stats.scoreTrend}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#94a3b833" />
-                <XAxis dataKey="label" fontSize={12} />
-                <YAxis domain={[0, 100]} fontSize={12} />
-                <Tooltip />
-                <Line type="monotone" dataKey="score" stroke="#4f46e5" strokeWidth={3} dot={{ r: 4 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff18" />
+                <XAxis dataKey="label" fontSize={12} tick={{ fill: '#a1a1aa' }} axisLine={{ stroke: '#52525b' }} tickLine={{ stroke: '#52525b' }} />
+                <YAxis domain={[0, 100]} fontSize={12} tick={{ fill: '#a1a1aa' }} axisLine={{ stroke: '#52525b' }} tickLine={{ stroke: '#52525b' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#242528', border: '1px solid #48484d', borderRadius: '12px', color: '#f4f1ed' }} />
+                <Line type="monotone" dataKey="score" stroke="#d6a66f" strokeWidth={3} dot={{ r: 4, fill: '#d6a66f', stroke: '#242528', strokeWidth: 2 }} />
               </LineChart>
             </ResponsiveContainer>
           ) : <p className="py-16 text-center text-sm text-slate-500">Take a quiz to see your score trend.</p>}
@@ -121,6 +122,7 @@ export default function Dashboard() {
           </ul>
         ) : <p className="text-sm text-slate-500">No quizzes yet.</p>}
       </section>
-    </div>
+      </div>
+    </main>
   );
 }

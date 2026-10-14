@@ -10,6 +10,15 @@
 
 @layer components {
   .card { @apply rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900; }
+  .feature-card { perspective: 1000px; min-height: 210px; }
+  .feature-card-inner { position: relative; min-height: inherit; transform-style: preserve-3d; transition: transform 600ms ease; }
+  .feature-card-face { position: absolute; inset: 0; border-radius: 1rem; padding: 1.25rem; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .feature-card-back { transform: rotateY(180deg); }
+  .feature-card:hover .feature-card-inner,
+  .feature-card:focus .feature-card-inner { transform: rotateY(180deg); }
+  @media (prefers-reduced-motion: reduce) {
+    .feature-card-inner { transition-duration: 0.01ms; }
+  }
   .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60; }
   .btn-primary { @apply btn bg-brand-600 text-white hover:bg-brand-700; }
   .btn-outline { @apply btn border border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800; }
