@@ -19,6 +19,11 @@ export default function CourseDetail() {
     api.get(`/courses/${id}`).then((r) => setData(r.data)).catch((e) => toast.error(errMsg(e)));
   }, [id]);
   useEffect(load, [load]);
+  useEffect(() => {
+    if (data && window.location.hash === '#quiz') {
+      document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [data]);
 
   if (!data) return <Loader />;
   const { course, enrollment } = data;
@@ -90,7 +95,7 @@ export default function CourseDetail() {
         </div>
       </div>
 
-      <aside className="card h-fit space-y-4">
+      <aside id="quiz" className="card h-fit space-y-4">
         <h2 className="font-semibold">✨ Generate AI quiz</h2>
         {canGenerate ? (
           <>
