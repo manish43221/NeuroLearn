@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { protect } = require('../middleware/auth');
+const { protect, authorize } = require('../middleware/auth');
 const r = require('../controllers/resultController');
 
 router.use(protect);
@@ -8,6 +8,7 @@ router.use(protect);
 router.get('/stats', r.getStats);
 router.get('/weak-topics', r.getWeakTopics);
 router.get('/leaderboard', r.getLeaderboard);
+router.get('/students', authorize('teacher', 'admin'), r.getStudents);
 router.get('/', r.getHistory);
 router.get('/:id', r.getResult);
 
