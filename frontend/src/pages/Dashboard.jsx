@@ -73,7 +73,7 @@ export default function Dashboard() {
           {stats.scoreTrend.length ? (
             <ResponsiveContainer width="100%" height={240}>
               <LineChart data={stats.scoreTrend}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff18" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#D5DDD1" />
                 <XAxis dataKey="label" fontSize={12} tick={{ fill: '#a1a1aa' }} axisLine={{ stroke: '#52525b' }} tickLine={{ stroke: '#52525b' }} />
                 <YAxis domain={[0, 100]} fontSize={12} tick={{ fill: '#a1a1aa' }} axisLine={{ stroke: '#52525b' }} tickLine={{ stroke: '#52525b' }} />
                 <Tooltip contentStyle={{ backgroundColor: '#242528', border: '1px solid #48484d', borderRadius: '12px', color: '#f4f1ed' }} />
