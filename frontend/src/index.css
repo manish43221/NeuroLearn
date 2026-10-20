@@ -298,3 +298,105 @@ html.dark body {
   background-color: #252C25;
   color: #E8E9DF;
 }
+
+.dashboard-theme {
+  background-color: #E8ECE4;
+  color: #354034;
+}
+
+.dashboard-theme .card {
+  background-color: #F8FAF6;
+  border-color: #C6D0C2;
+}
+
+.dashboard-theme .dashboard-hero {
+  background-color: #344235;
+  border-color: #526252;
+  color: #F4F6F0;
+}
+
+.dashboard-theme .dashboard-hero p {
+  color: #E1E8DD;
+}
+
+.dashboard-theme .dashboard-action {
+  background-color: #60775B;
+  color: #FFFFFF;
+}
+
+.dashboard-theme .dashboard-action:hover {
+  background-color: #71896B;
+}
+
+.dashboard-theme .stat-card-icon {
+  background-color: #E1E9DD;
+  color: #455A42;
+}
+
+.dashboard-theme .text-slate-500 {
+  color: #586454;
+}
+
+.dashboard-theme .text-brand-600 {
+  color: #52684D !important;
+}
+
+.dashboard-theme .page a:hover {
+  color: #3F583C;
+}
+
+.dashboard-theme .h-2.w-full.overflow-hidden {
+  background-color: #D5DDD1;
+}
+
+.dashboard-theme .recharts-cartesian-axis-tick-value {
+  fill: #586454 !important;
+}
+
+.dashboard-theme .recharts-cartesian-grid line {
+  stroke: #D5DDD1 !important;
+}
+
+html.dark .dashboard-theme {
+  background-color: #202720;
+  color: #E8EDE5;
+}
+
+html.dark .dashboard-theme .card {
+  background-color: #2B342C;
+  border-color: #4B594A;
+}
+
+html.dark .dashboard-theme .dashboard-hero {
+  background-color: #344235;
+  border-color: #526252;
+}
+
+html.dark .dashboard-theme .stat-card-icon {
+  background-color: #40503F;
+  color: #E0E9D9;
+}
+
+html.dark .dashboard-theme .text-slate-500 {
+  color: #C0CBBB;
+}
+
+html.dark .dashboard-theme .text-brand-600 {
+  color: #B8CDAE !important;
+}
+
+html.dark .dashboard-theme .page a:hover {
+  color: #D9E5D2;
+}
+
+html.dark .dashboard-theme .h-2.w-full.overflow-hidden {
+  background-color: #485447;
+}
+
+html.dark .dashboard-theme .recharts-cartesian-axis-tick-value {
+  fill: #C0CBBB !important;
+}
+
+html.dark .dashboard-theme .recharts-cartesian-grid line {
+  stroke: #536050 !important;
+}

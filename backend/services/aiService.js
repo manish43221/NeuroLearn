@@ -104,6 +104,9 @@ function offlineQuestions({ topics, focusTopic, difficulty, count }) {
       'No AI API key is configured and the offline bank has no questions for these topics. Set AI_PROVIDER and an API key in backend/.env.'
     );
   }
+  if (pool.length < count) {
+    throw new ApiError(400, `Only ${pool.length} offline questions are available for these topics; reduce the question count or configure an AI provider.`);
+  }
   // prefer requested difficulty, then others; shuffle inside each group
   const shuffle = (a) => [...a].sort(() => Math.random() - 0.5);
   const sorted = [...shuffle(pool.filter((p) => p.difficulty === difficulty)), ...shuffle(pool.filter((p) => p.difficulty !== difficulty))];
@@ -127,13 +130,17 @@ async function generateQuiz(opts) {
   try {
     const prompt = buildPrompt(opts);
     const text = provider === 'gemini' ? await callGemini(prompt) : await callOpenAI(prompt);
-    const questions = parseAndValidate(text, opts.focusTopic || opts.topics[0], opts.difficulty).slice(0, opts.count);
-    return { questions, source: provider };
+    const questions = parseAndValidate(text, opts.focusTopic || opts.topics[0], opts.difficulty);
+    if (questions.length < opts.count) {
+      throw new Error(`AI returned ${questions.length} questions; ${opts.count} were requested`);
+    }
+    return { questions: questions.slice(0, opts.count), source: provider };
   } catch (err) {
     console.error('AI generation failed:', err.message);
     try {
       return { questions: offlineQuestions(opts), source: 'offline', warning: `AI service failed (${err.message}). Showing offline questions instead.` };
-    } catch {
+    } catch (fallbackError) {
+      if (fallbackError instanceof ApiError) throw fallbackError;
       throw new ApiError(502, `AI quiz generation failed: ${err.message}`);
     }
   }
