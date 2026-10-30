@@ -29,6 +29,7 @@
 }
 
 @layer components {
+<<<<<<< HEAD
   .card { @apply rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900; }
   .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60; }
   .btn-primary { @apply btn bg-brand-600 text-white hover:bg-brand-700; }
@@ -38,4 +39,376 @@
   .label { @apply mb-1 block text-sm font-medium text-slate-600 dark:text-slate-400; }
   .chip { @apply inline-block rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-700 dark:bg-brand-900/40 dark:text-brand-200; }
   .page { @apply mx-auto max-w-6xl px-4 py-6; }
+=======
+  .card {
+    @apply rounded-2xl p-5 shadow-sm;
+    background-color: #FFFFFF;
+    border: 1px solid #C7D2C1;
+  }
+
+  html.dark .card {
+    background-color: #303830;
+    border-color: #465345;
+  }
+
+  .feature-card {
+    perspective: 1000px;
+    min-height: 210px;
+  }
+
+  .feature-card-inner {
+    position: relative;
+    min-height: inherit;
+    transform-style: preserve-3d;
+    transition: transform 600ms ease;
+  }
+
+  .feature-card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .feature-card-back {
+    transform: rotateY(180deg);
+  }
+
+  .feature-card:hover .feature-card-inner,
+  .feature-card:focus .feature-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feature-card-inner {
+      transition-duration: 0.01ms;
+    }
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-primary {
+    @apply btn;
+    background-color: #91A48D;
+    color: #FFFFFF;
+  }
+
+  .btn-primary:hover {
+    background-color: #748A70;
+  }
+
+  .btn-outline {
+    @apply btn;
+    border: 1px solid #C7D2C1;
+    color: #3F493D;
+  }
+
+  .btn-outline:hover {
+    background-color: #C7D2C1;
+  }
+
+  html.dark .btn-outline {
+    border-color: #465345;
+    color: #E8E9DF;
+  }
+
+  html.dark .btn-outline:hover {
+    background-color: #394639;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700;
+  }
+
+  .input {
+    @apply w-full rounded-xl border px-3 py-2 text-sm outline-none transition;
+    background-color: #FFFFFF;
+    border-color: #C7D2C1;
+    color: #3F493D;
+  }
+
+  .input:focus {
+    border-color: #91A48D;
+    box-shadow: 0 0 0 2px #C7D2C1;
+  }
+
+  html.dark .input {
+    background-color: #303830;
+    border-color: #465345;
+    color: #E8E9DF;
+  }
+
+  .label {
+    @apply mb-1 block text-sm font-medium;
+    color: #687563;
+  }
+
+  html.dark .label {
+    color: #C7D2C1;
+  }
+
+  .chip {
+    @apply inline-block rounded-full px-2.5 py-0.5 text-xs font-medium;
+    background-color: #E4E9DE;
+    color: #52684D;
+  }
+
+  html.dark .chip {
+    background-color: #394639;
+    color: #D4E0CD;
+  }
+
+  .page {
+    @apply mx-auto max-w-6xl px-4 py-6;
+  }
+
+  .page a {
+    transition: color 150ms ease;
+  }
+
+  .page a:hover {
+    color: #748A70;
+  }
+
+  ::selection {
+    background-color: #C7D2C1;
+    color: #3F493D;
+  }
+}
+
+/* NeuroLearn Header / Navbar */
+nav {
+  background-color: #F7F4ED;
+  color: #3F493D;
+  border-color: #C7D2C1;
+}
+
+html.dark nav {
+  background-color: #252C25;
+  color: #E8E9DF;
+  border-color: #465345;
+}
+
+nav a {
+  color: #3F493D;
+  transition: color 150ms ease;
+}
+
+nav a:hover {
+  color: #748A70;
+}
+
+html.dark nav a {
+  color: #E8E9DF;
+}
+
+html.dark nav a:hover {
+  color: #C7D2C1;
+}
+
+/* ===== NeuroLearn Sage Green Theme ===== */
+
+/* Header / Navbar */
+nav {
+  background-color: #F7F4ED !important;
+  color: #3F493D;
+  border-color: #C7D2C1 !important;
+}
+
+html.dark nav {
+  background-color: #252C25 !important;
+  color: #E8E9DF;
+  border-color: #465345 !important;
+}
+
+/* Brand name */
+nav a {
+  color: #52684D;
+}
+
+nav a:hover {
+  color: #748A70;
+}
+
+/* Header buttons */
+nav a[class*="bg-brand"],
+nav button[class*="bg-brand"] {
+  background-color: #91A48D !important;
+  color: #FFFFFF !important;
+}
+
+nav a[class*="bg-brand"]:hover,
+nav button[class*="bg-brand"]:hover {
+  background-color: #748A70 !important;
+}
+
+/* Landing page hero section */
+body {
+  background-color: #F7F4ED;
+}
+
+body > #root {
+  min-height: 100vh;
+}
+
+/* Replace purple gradients */
+.bg-gradient-to-r,
+.bg-gradient-to-br,
+.bg-gradient-to-b {
+  background-image: linear-gradient(
+    135deg,
+    #91A48D 0%,
+    #C7D2C1 55%,
+    #CBAE70 100%
+  ) !important;
+}
+
+/* Hero text */
+.text-white {
+  color: #FFFFFF;
+}
+
+/* Hero badge */
+.rounded-full[class*="bg-white"],
+[class*="bg-white/"] {
+  background-color: rgba(247, 244, 237, 0.2);
+}
+
+/* Primary buttons */
+.bg-brand-600,
+.bg-indigo-600,
+.bg-purple-600 {
+  background-color: #91A48D !important;
+}
+
+.hover\:bg-brand-700:hover,
+.hover\:bg-indigo-700:hover,
+.hover\:bg-purple-700:hover {
+  background-color: #748A70 !important;
+}
+
+/* White hero buttons */
+.bg-white {
+  background-color: #F7F4ED;
+  color: #52684D;
+}
+
+/* Accent colors */
+.text-indigo-600,
+.text-purple-600,
+.text-brand-600 {
+  color: #748A70 !important;
+}
+
+/* Dark mode */
+html.dark body {
+  background-color: #252C25;
+  color: #E8E9DF;
+}
+
+.dashboard-theme {
+  background-color: #E8ECE4;
+  color: #354034;
+}
+
+.dashboard-theme .card {
+  background-color: #F8FAF6;
+  border-color: #C6D0C2;
+}
+
+.dashboard-theme .dashboard-hero {
+  background-color: #344235;
+  border-color: #526252;
+  color: #F4F6F0;
+}
+
+.dashboard-theme .dashboard-hero p {
+  color: #E1E8DD;
+}
+
+.dashboard-theme .dashboard-action {
+  background-color: #60775B;
+  color: #FFFFFF;
+}
+
+.dashboard-theme .dashboard-action:hover {
+  background-color: #71896B;
+}
+
+.dashboard-theme .stat-card-icon {
+  background-color: #E1E9DD;
+  color: #455A42;
+}
+
+.dashboard-theme .text-slate-500 {
+  color: #586454;
+}
+
+.dashboard-theme .text-brand-600 {
+  color: #52684D !important;
+}
+
+.dashboard-theme .page a:hover {
+  color: #3F583C;
+}
+
+.dashboard-theme .h-2.w-full.overflow-hidden {
+  background-color: #D5DDD1;
+}
+
+.dashboard-theme .recharts-cartesian-axis-tick-value {
+  fill: #586454 !important;
+}
+
+.dashboard-theme .recharts-cartesian-grid line {
+  stroke: #D5DDD1 !important;
+}
+
+html.dark .dashboard-theme {
+  background-color: #202720;
+  color: #E8EDE5;
+}
+
+html.dark .dashboard-theme .card {
+  background-color: #2B342C;
+  border-color: #4B594A;
+}
+
+html.dark .dashboard-theme .dashboard-hero {
+  background-color: #344235;
+  border-color: #526252;
+}
+
+html.dark .dashboard-theme .stat-card-icon {
+  background-color: #40503F;
+  color: #E0E9D9;
+}
+
+html.dark .dashboard-theme .text-slate-500 {
+  color: #C0CBBB;
+}
+
+html.dark .dashboard-theme .text-brand-600 {
+  color: #B8CDAE !important;
+}
+
+html.dark .dashboard-theme .page a:hover {
+  color: #D9E5D2;
+}
+
+html.dark .dashboard-theme .h-2.w-full.overflow-hidden {
+  background-color: #485447;
+}
+
+html.dark .dashboard-theme .recharts-cartesian-axis-tick-value {
+  fill: #C0CBBB !important;
+}
+
+html.dark .dashboard-theme .recharts-cartesian-grid line {
+  stroke: #536050 !important;
+>>>>>>> 031bd3c769a1b2338de080a7e564243dea7c6290
 }
