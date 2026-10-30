@@ -44,7 +44,7 @@ export default function Dashboard() {
 
   return (
     <div className="page space-y-6">
-      <div className="card flex flex-col items-start justify-between gap-4 !border-0 bg-gradient-to-r from-brand-600 to-purple-600 !text-white sm:flex-row sm:items-center">
+      <div className="card flex flex-col items-start justify-between gap-4 !border-0 bg-gradient-to-r from-slate-900 via-blue-900 to-brand-700 !text-white sm:flex-row sm:items-center">
         <div>
           <h1 className="text-2xl font-bold">Welcome back, {user.name.split(' ')[0]} 👋</h1>
           <p className="mt-1 text-brand-100">{rec ? rec.message : 'Enrol in a course and take your first AI quiz to get personalised insights.'}</p>
@@ -76,7 +76,7 @@ export default function Dashboard() {
                 <XAxis dataKey="label" fontSize={12} />
                 <YAxis domain={[0, 100]} fontSize={12} />
                 <Tooltip />
-                <Line type="monotone" dataKey="score" stroke="#4f46e5" strokeWidth={3} dot={{ r: 4 }} />
+                <Line type="monotone" dataKey="score" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4 }} />
               </LineChart>
             </ResponsiveContainer>
           ) : <p className="py-16 text-center text-sm text-slate-500">Take a quiz to see your score trend.</p>}

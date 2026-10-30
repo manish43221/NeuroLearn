@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Courses from './pages/Courses';
+import AddCourse from './pages/AddCourse';
 import CourseDetail from './pages/CourseDetail';
 import MyCourses from './pages/MyCourses';
 import Quizzes from './pages/Quizzes';
@@ -35,6 +36,7 @@ export default function App() {
 
         <Route path="/dashboard" element={<P><Dashboard /></P>} />
         <Route path="/courses" element={<P><Courses /></P>} />
+        <Route path="/courses/new" element={<P roles={['teacher', 'admin']}><AddCourse /></P>} />
         <Route path="/courses/:id" element={<P><CourseDetail /></P>} />
         <Route path="/my-courses" element={<P><MyCourses /></P>} />
         <Route path="/quizzes" element={<P><Quizzes /></P>} />
