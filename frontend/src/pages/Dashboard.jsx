@@ -73,15 +73,11 @@ export default function Dashboard() {
           {stats.scoreTrend.length ? (
             <ResponsiveContainer width="100%" height={240}>
               <LineChart data={stats.scoreTrend}>
-<<<<<<< Updated upstream
-                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff18" />
-=======
-                <CartesianGrid strokeDasharray="3 3" stroke="#D5DDD1" />
->>>>>>> Stashed changes
-                <XAxis dataKey="label" fontSize={12} tick={{ fill: '#a1a1aa' }} axisLine={{ stroke: '#52525b' }} tickLine={{ stroke: '#52525b' }} />
-                <YAxis domain={[0, 100]} fontSize={12} tick={{ fill: '#a1a1aa' }} axisLine={{ stroke: '#52525b' }} tickLine={{ stroke: '#52525b' }} />
-                <Tooltip contentStyle={{ backgroundColor: '#242528', border: '1px solid #48484d', borderRadius: '12px', color: '#f4f1ed' }} />
-                <Line type="monotone" dataKey="score" stroke="#d6a66f" strokeWidth={3} dot={{ r: 4, fill: '#d6a66f', stroke: '#242528', strokeWidth: 2 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#94a3b833" />
+                <XAxis dataKey="label" fontSize={12} tick={{ fill: '#64748b' }} />
+                <YAxis domain={[0, 100]} fontSize={12} tick={{ fill: '#64748b' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #dbeafe', borderRadius: '12px', color: '#0f172a' }} />
+                <Line type="monotone" dataKey="score" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4, fill: '#3b82f6' }} />
               </LineChart>
             </ResponsiveContainer>
           ) : <p className="py-16 text-center text-sm text-slate-500">Take a quiz to see your score trend.</p>}

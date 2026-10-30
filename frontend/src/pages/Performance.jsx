@@ -54,7 +54,7 @@ export default function Performance() {
               <XAxis dataKey="label" fontSize={12} />
               <YAxis domain={[0, 100]} fontSize={12} />
               <Tooltip />
-              <Line type="monotone" dataKey="score" stroke="#4f46e5" strokeWidth={3} />
+              <Line type="monotone" dataKey="score" stroke="#3b82f6" strokeWidth={3} />
             </LineChart>
           </ResponsiveContainer>
         </div>

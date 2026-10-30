@@ -6,7 +6,7 @@ import Loader from '../components/Loader';
 
 const empty = { title: '', description: '', category: 'General', difficulty: 'beginner', topics: '', lessons: [] };
 
-export default function CourseForm() {
+export default function CourseForm({ standalone = false }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [form, setForm] = useState(id ? null : empty);
@@ -34,13 +34,13 @@ export default function CourseForm() {
       const payload = { title: form.title, description: form.description, category: form.category, difficulty: form.difficulty, topics: topicList, lessons: form.lessons };
       id ? await api.put(`/courses/${id}`, payload) : await api.post('/courses', payload);
       toast.success(id ? 'Course updated' : 'Course created');
-      navigate('/manage');
+      navigate(standalone ? '/courses' : '/manage');
     } catch (err) { toast.error(errMsg(err)); setBusy(false); }
   };
 
   return (
     <form onSubmit={submit} className="mx-auto max-w-3xl space-y-6 px-4 py-6">
-      <h1 className="text-2xl font-bold">{id ? 'Edit course' : 'Create course'}</h1>
+      {!standalone && <h1 className="text-2xl font-bold">{id ? 'Edit course' : 'Create course'}</h1>}
       <div className="card space-y-4">
         <div><label className="label">Title</label><input className="input" value={form.title} onChange={set('title')} /></div>
         <div><label className="label">Description</label><textarea className="input" rows="3" value={form.description} onChange={set('description')} /></div>
@@ -77,7 +77,7 @@ export default function CourseForm() {
 
       <div className="flex gap-3">
         <button className="btn-primary" disabled={busy}>{busy ? 'Saving...' : 'Save course'}</button>
-        <button type="button" className="btn-outline" onClick={() => navigate('/manage')}>Cancel</button>
+        <button type="button" className="btn-outline" onClick={() => navigate(standalone ? '/courses' : '/manage')}>Cancel</button>
       </div>
     </form>
   );

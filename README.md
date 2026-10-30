@@ -36,7 +36,7 @@ Requirements: Node.js 18+ and MongoDB (local) or a MongoDB Atlas URI.
 cd backend
 npm install
 cp .env.example .env        # Windows: copy .env.example .env   (then edit MONGO_URI / JWT_SECRET)
-npm run seed                # demo users + courses
+npm run seed                # safely add demo users, courses, enrollments + sample quiz history
 npm run dev                 # http://localhost:5000
 
 # 2) Frontend (new terminal)
@@ -45,7 +45,7 @@ npm install
 npm run dev                 # http://localhost:5173
 ```
 
-Demo logins (after seed): `student@neurolearn.com / Student@123`, `teacher@neurolearn.com / Teacher@123`, `admin@neurolearn.com / Admin@123`
+`npm run seed` can be repeated and keeps existing non-demo data. The login page lists all six demo accounts and can fill their credentials for you.
 
 ## AI setup
 `AI_PROVIDER=mock` (default) works with no key using a built-in question bank (Arrays, Recursion, Sorting, Trees, SQL Joins, Normalization).

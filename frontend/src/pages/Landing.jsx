@@ -42,11 +42,11 @@ const features = [
 export default function Landing() {
   return (
     <div>
-      <section className="bg-gradient-to-br from-brand-600 via-brand-700 to-purple-700 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-brand-800 text-white">
         <div className="mx-auto max-w-6xl px-4 py-20 text-center">
-          <span className="rounded-full bg-white/15 px-4 py-1 text-sm">AI-powered personalized learning</span>
+          <span className="rounded-full border border-white/15 bg-white/10 px-4 py-1 text-sm text-blue-100">AI-powered personalized learning</span>
           <h1 className="mx-auto mt-6 max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">Learn smarter. Know exactly what to improve.</h1>
-          <p className="mx-auto mt-5 max-w-2xl text-lg text-brand-100">
+          <p className="mx-auto mt-5 max-w-2xl text-lg text-blue-100">
             NeuroLearn turns your course content into AI quizzes, tracks every attempt and shows your weak topics so you can practise what matters.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
