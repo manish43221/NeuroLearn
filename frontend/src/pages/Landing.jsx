@@ -1,12 +1,42 @@
 import { Link } from 'react-router-dom';
 
 const features = [
-  { icon: '🤖', title: 'AI-generated quizzes', text: 'Generate fresh MCQs for any course topic on demand.' },
-  { icon: '🎯', title: 'Weak-topic detection', text: 'See exactly which topics need more practice.' },
-  { icon: '📈', title: 'Progress analytics', text: 'Score trends, topic accuracy and course progress.' },
-  { icon: '⚡', title: 'Adaptive difficulty', text: 'Quizzes get harder or easier based on your results.' },
-  { icon: '⏱️', title: 'Instant feedback', text: 'Scores and explanations the moment you submit.' },
-  { icon: '🔐', title: 'Secure & role based', text: 'JWT login for students, teachers and admins.' },
+  {
+    icon: '🤖',
+    title: 'AI-generated quizzes',
+    text: 'Generate fresh MCQs for any course topic on demand.',
+    detail: 'Choose a topic and create a focused quiz whenever you are ready to practise. Questions help you check your understanding beyond memorizing notes.',
+  },
+  {
+    icon: '🎯',
+    title: 'Weak-topic detection',
+    text: 'See exactly which topics need more practice.',
+    detail: 'Review your results by topic to spot areas that need attention. Use those insights to spend your study time where it can make the biggest difference.',
+  },
+  {
+    icon: '📈',
+    title: 'Progress analytics',
+    text: 'Score trends, topic accuracy and course progress.',
+    detail: 'Track quiz scores and learning progress over time. Clear performance summaries make it easier to notice improvement and decide what to study next.',
+  },
+  {
+    icon: '⚡',
+    title: 'Adaptive difficulty',
+    text: 'Quizzes get harder or easier based on your results.',
+    detail: 'Questions can adapt to your recent performance, helping you build confidence with the basics and keep progressing toward more challenging material.',
+  },
+  {
+    icon: '⏱️',
+    title: 'Instant feedback',
+    text: 'Scores and explanations the moment you submit.',
+    detail: 'See your score as soon as you finish, along with explanations that help you understand the correct answers and learn from mistakes.',
+  },
+  {
+    icon: '🔐',
+    title: 'Secure & role based',
+    text: 'JWT login for students, teachers and admins.',
+    detail: 'Sign in to a personal account with role-based access. Students can focus on learning while teachers and admins get the tools for their roles.',
+  },
 ];
 
 export default function Landing() {
@@ -34,11 +64,21 @@ export default function Landing() {
               <article
                 key={f.title}
                 tabIndex={0}
-                className="rounded-2xl border border-slate-200 bg-white p-5 transition duration-300 ease-out hover:z-10 hover:scale-[1.04] hover:border-brand-400/50 hover:shadow-xl hover:shadow-brand-950/10 focus-visible:z-10 focus-visible:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 dark:border-slate-800 dark:bg-[#111a2b] dark:hover:shadow-brand-950/30"
+                className="feature-card rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
               >
-                <div className="text-3xl">{f.icon}</div>
-                <h3 className="mt-3 font-semibold">{f.title}</h3>
-                <p className="mt-1 text-sm text-slate-400">{f.text}</p>
+                <div className="feature-card-inner">
+                  <div className="feature-card-face feature-card-front border border-slate-200 bg-white dark:border-slate-800 dark:bg-[#111a2b]">
+                    <div className="text-3xl">{f.icon}</div>
+                    <h3 className="mt-3 font-semibold">{f.title}</h3>
+                    <p className="mt-1 text-sm text-slate-400">{f.text}</p>
+                    <span className="mt-3 block text-xs font-medium text-brand-600 dark:text-brand-300">Hover to learn more</span>
+                  </div>
+                  <div className="feature-card-face feature-card-back border border-brand-200 bg-brand-50 dark:border-brand-800 dark:bg-brand-950">
+                    <div className="text-3xl">{f.icon}</div>
+                    <h3 className="mt-3 font-semibold">{f.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{f.detail}</p>
+                  </div>
+                </div>
               </article>
             ))}
           </div>

@@ -23,7 +23,7 @@ export default function CourseCard({ course, progress, showProgress = false, onE
           </div>
         )}
       </Link>
-      {showProgress && (
+      {showProgress ? (
         <div className="mt-auto pt-2">
           <div className="mb-1 flex justify-between text-xs text-slate-500">
             <span>Progress</span>
@@ -31,6 +31,10 @@ export default function CourseCard({ course, progress, showProgress = false, onE
           </div>
           <ProgressBar value={progress} />
         </div>
+      ) : (
+        <Link to={`/courses/${course._id}#quiz`} className="btn-outline text-center">
+          Take quiz
+        </Link>
       )}
       {onEnroll && (
         <button type="button" className="btn-primary w-full" onClick={onEnroll} disabled={enrolling}>

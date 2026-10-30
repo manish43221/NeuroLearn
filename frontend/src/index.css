@@ -19,3 +19,58 @@
   .chip { @apply inline-block rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-700 dark:bg-brand-900/40 dark:text-brand-200; }
   .page { @apply mx-auto max-w-6xl px-4 py-6; }
 }
+
+body > #root { min-height: 100vh; }
+
+.feature-card {
+  min-height: 210px;
+  perspective: 1000px;
+}
+
+.feature-card-inner {
+  position: relative;
+  min-height: inherit;
+  transform-style: preserve-3d;
+  transition: transform 600ms ease;
+}
+
+.feature-card-face {
+  position: absolute;
+  inset: 0;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.feature-card-back { transform: rotateY(180deg); }
+
+.feature-card:hover .feature-card-inner,
+.feature-card:focus .feature-card-inner { transform: rotateY(180deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-card-inner { transition-duration: 0.01ms; }
+}
+
+.dashboard-theme { min-height: calc(100vh - 4rem); }
+
+.dashboard-theme .dashboard-hero {
+  border: 0;
+  background: linear-gradient(110deg, #0f172a, #1e3a8a 58%, #2563eb);
+  color: #fff;
+}
+
+.dashboard-theme .dashboard-hero p { color: #dbeafe; }
+
+.dashboard-theme .dashboard-action {
+  background: #fff;
+  color: #1d4ed8;
+}
+
+.dashboard-theme .dashboard-action:hover { background: #eff6ff; }
+
+.dashboard-theme .recharts-cartesian-axis-tick-value { fill: #64748b; }
+.dashboard-theme .recharts-cartesian-grid line { stroke: #cbd5e1; }
+
+html.dark .dashboard-theme .recharts-cartesian-axis-tick-value { fill: #cbd5e1; }
+html.dark .dashboard-theme .recharts-cartesian-grid line { stroke: #475569; }
