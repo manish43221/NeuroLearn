@@ -33,14 +33,18 @@ export default function Navbar() {
             <NavLink to="/my-courses" className={linkClass}>My Courses</NavLink>
             <NavLink to="/quizzes" className={linkClass}>Quizzes</NavLink>
             <NavLink to="/performance" className={linkClass}>Performance</NavLink>
+            <NavLink to="/tutor" className={linkClass}>AI Tutor</NavLink>
+            <NavLink to="/study-plan" className={linkClass}>Study Plan</NavLink>
+            <NavLink to="/flashcards" className={linkClass}>Flashcards</NavLink>
             {user.role !== 'student' && <NavLink to="/manage" className={linkClass}>Manage</NavLink>}
+            {user.role !== 'student' && <NavLink to="/students" className={linkClass}>Students</NavLink>}
           </nav>
         )}
 
         <div className="ml-auto flex items-center gap-2">
           {user && (
             <form onSubmit={search} className="hidden lg:block">
-              <input className="input w-56 !py-1.5" placeholder="Search courses" value={q} onChange={(e) => setQ(e.target.value)} />
+              <input className="input w-40 !py-1.5" placeholder="Search courses" value={q} onChange={(e) => setQ(e.target.value)} />
             </form>
           )}
           <button
@@ -75,7 +79,11 @@ export default function Navbar() {
           <NavLink to="/my-courses" className={linkClass}>My Courses</NavLink>
           <NavLink to="/quizzes" className={linkClass}>Quizzes</NavLink>
           <NavLink to="/performance" className={linkClass}>Performance</NavLink>
+            <NavLink to="/tutor" className={linkClass}>AI Tutor</NavLink>
+            <NavLink to="/study-plan" className={linkClass}>Study Plan</NavLink>
+            <NavLink to="/flashcards" className={linkClass}>Flashcards</NavLink>
           {user.role !== 'student' && <NavLink to="/manage" className={linkClass}>Manage</NavLink>}
+            {user.role !== 'student' && <NavLink to="/students" className={linkClass}>Students</NavLink>}
         </nav>
       )}
     </header>

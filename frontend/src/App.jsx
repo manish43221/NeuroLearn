@@ -15,6 +15,10 @@ import Performance from './pages/Performance';
 import Profile from './pages/Profile';
 import Manage from './pages/Manage';
 import CourseForm from './pages/CourseForm';
+import Tutor from './pages/Tutor';
+import StudyPlan from './pages/StudyPlan';
+import Flashcards from './pages/Flashcards';
+import Students from './pages/Students';
 import { useAuth } from './context/AuthContext';
 
 const P = ({ children, roles }) => <ProtectedRoute roles={roles}>{children}</ProtectedRoute>;
@@ -38,6 +42,10 @@ export default function App() {
         <Route path="/results/:id" element={<P><Result /></P>} />
         <Route path="/performance" element={<P><Performance /></P>} />
         <Route path="/profile" element={<P><Profile /></P>} />
+        <Route path="/tutor" element={<P><Tutor /></P>} />
+        <Route path="/study-plan" element={<P><StudyPlan /></P>} />
+        <Route path="/flashcards" element={<P><Flashcards /></P>} />
+        <Route path="/students" element={<P roles={['teacher', 'admin']}><Students /></P>} />
 
         <Route path="/manage" element={<P roles={['teacher', 'admin']}><Manage /></P>} />
         <Route path="/manage/course/new" element={<P roles={['teacher', 'admin']}><CourseForm /></P>} />
