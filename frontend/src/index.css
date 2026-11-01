@@ -67,10 +67,106 @@ body > #root { min-height: 100vh; }
   color: #1d4ed8;
 }
 
-.dashboard-theme .dashboard-action:hover { background: #eff6ff; }
+html.dark nav a:hover {
+  color: #C7D2C1;
+}
 
-.dashboard-theme .recharts-cartesian-axis-tick-value { fill: #64748b; }
-.dashboard-theme .recharts-cartesian-grid line { stroke: #cbd5e1; }
+/* ===== NeuroLearn Sage Green Theme ===== */
 
-html.dark .dashboard-theme .recharts-cartesian-axis-tick-value { fill: #cbd5e1; }
-html.dark .dashboard-theme .recharts-cartesian-grid line { stroke: #475569; }
+/* Header / Navbar */
+nav {
+  background-color: #F7F4ED !important;
+  color: #3F493D;
+  border-color: #C7D2C1 !important;
+}
+
+html.dark nav {
+  background-color: #252C25 !important;
+  color: #E8E9DF;
+  border-color: #465345 !important;
+}
+
+/* Brand name */
+nav a {
+  color: #52684D;
+}
+
+nav a:hover {
+  color: #748A70;
+}
+
+/* Header buttons */
+nav a[class*="bg-brand"],
+nav button[class*="bg-brand"] {
+  background-color: #91A48D !important;
+  color: #FFFFFF !important;
+}
+
+nav a[class*="bg-brand"]:hover,
+nav button[class*="bg-brand"]:hover {
+  background-color: #748A70 !important;
+}
+
+/* Landing page hero section */
+body {
+  background-color: #F7F4ED;
+}
+
+body > #root {
+  min-height: 100vh;
+}
+
+/* Replace purple gradients */
+.bg-gradient-to-r,
+.bg-gradient-to-br,
+.bg-gradient-to-b {
+  background-image: linear-gradient(
+    135deg,
+    #91A48D 0%,
+    #C7D2C1 55%,
+    #CBAE70 100%
+  ) !important;
+}
+
+/* Hero text */
+.text-white {
+  color: #FFFFFF;
+}
+
+/* Hero badge */
+.rounded-full[class*="bg-white"],
+[class*="bg-white/"] {
+  background-color: rgba(247, 244, 237, 0.2);
+}
+
+/* Primary buttons */
+.bg-brand-600,
+.bg-indigo-600,
+.bg-purple-600 {
+  background-color: #91A48D !important;
+}
+
+.hover\:bg-brand-700:hover,
+.hover\:bg-indigo-700:hover,
+.hover\:bg-purple-700:hover {
+  background-color: #748A70 !important;
+}
+
+/* White hero buttons */
+.bg-white {
+  background-color: #F7F4ED;
+  color: #52684D;
+}
+
+/* Accent colors */
+.text-indigo-600,
+.text-purple-600,
+.text-brand-600 {
+  color: #748A70 !important;
+}
+
+/* Dark mode */
+html.dark body {
+  background-color: #252C25;
+  color: #E8E9DF;
+}
