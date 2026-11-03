@@ -1,0 +1,1 @@
+export default function MasteryProgress({value=0}){return <div className="nl-meter" role="progressbar" aria-valuenow={value} aria-valuemin="0" aria-valuemax="100"><span style={{width:`${Math.max(0,Math.min(100,value))}%`}}/></div>}

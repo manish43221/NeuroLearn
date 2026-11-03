@@ -9,6 +9,7 @@ const answerSchema = new mongoose.Schema(
     explanation: String,
     topic: String,
     isCorrect: Boolean,
+    confidence: { type: String, enum: ['low', 'medium', 'high'], default: 'medium' },
   },
   { _id: false }
 );

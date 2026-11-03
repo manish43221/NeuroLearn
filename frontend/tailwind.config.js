@@ -6,8 +6,8 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa',
-          500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+          50: '#F0F3EE', 100: '#E3EADF', 200: '#C9D6C3', 300: '#AFC2A7', 400: '#91A88A',
+          500: '#748D6E', 600: '#647A62', 700: '#52684F', 800: '#40533E', 900: '#2F3D2D',
         },
       },
       fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },

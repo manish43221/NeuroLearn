@@ -18,8 +18,13 @@ import Manage from './pages/Manage';
 import CourseForm from './pages/CourseForm';
 import Tutor from './pages/Tutor';
 import StudyPlan from './pages/StudyPlan';
-import Flashcards from './pages/Flashcards';
+import Flashcards from './pages/FlashCards';
 import Students from './pages/Students';
+import NeuroLab from './pages/neurolab/NeuroLab';
+import NeuroMap from './pages/neurolab/NeuroMap';
+import AdaptiveLearning from './pages/neurolab/AdaptiveLearning';
+import CodeThinkingLab from './pages/neurolab/CodeThinkingLab';
+import ConfidenceInsights from './pages/neurolab/ConfidenceInsights';
 import { useAuth } from './context/AuthContext';
 
 const P = ({ children, roles }) => <ProtectedRoute roles={roles}>{children}</ProtectedRoute>;
@@ -47,6 +52,11 @@ export default function App() {
         <Route path="/tutor" element={<P><Tutor /></P>} />
         <Route path="/study-plan" element={<P><StudyPlan /></P>} />
         <Route path="/flashcards" element={<P><Flashcards /></P>} />
+        <Route path="/neurolab" element={<P><NeuroLab /></P>} />
+        <Route path="/neurolab/map" element={<P><NeuroMap /></P>} />
+        <Route path="/neurolab/adaptive" element={<P><AdaptiveLearning /></P>} />
+        <Route path="/neurolab/code-lab" element={<P><CodeThinkingLab /></P>} />
+        <Route path="/neurolab/confidence" element={<P><ConfidenceInsights /></P>} />
         <Route path="/students" element={<P roles={['teacher', 'admin']}><Students /></P>} />
 
         <Route path="/manage" element={<P roles={['teacher', 'admin']}><Manage /></P>} />

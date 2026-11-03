@@ -118,6 +118,7 @@ exports.submit = asyncHandler(async (req, res) => {
   if (!ownsQuiz(req.user, quiz)) throw new ApiError(403, 'This quiz belongs to another user');
 
   const given = new Map((Array.isArray(req.body.answers) ? req.body.answers : []).map((a) => [String(a.questionId), a.selected]));
+  const givenConfidence = new Map((Array.isArray(req.body.answers) ? req.body.answers : []).map((a) => [String(a.questionId), a.confidence]));
   const breakdown = new Map();
   let correct = 0;
 
@@ -130,7 +131,8 @@ exports.submit = asyncHandler(async (req, res) => {
     t.total++;
     if (isCorrect) t.correct++;
     breakdown.set(q.topic, t);
-    return { question: q.question, options: q.options, selected, correctAnswer: q.correctAnswer, explanation: q.explanation, topic: q.topic, isCorrect };
+    const confidence = ['low', 'medium', 'high'].includes(givenConfidence.get(String(q._id))) ? givenConfidence.get(String(q._id)) : 'medium';
+    return { question: q.question, options: q.options, selected, correctAnswer: q.correctAnswer, explanation: q.explanation, topic: q.topic, isCorrect, confidence };
   });
 
   const total = quiz.questions.length;

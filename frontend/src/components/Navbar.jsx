@@ -36,7 +36,8 @@ export default function Navbar() {
             <NavLink to="/performance" className={linkClass}>Performance</NavLink>
             <NavLink to="/tutor" className={linkClass}>AI Tutor</NavLink>
             <NavLink to="/study-plan" className={linkClass}>Study Plan</NavLink>
-            <NavLink to="/flashcards" className={linkClass}>Flashcards</NavLink>
+            <NavLink to="/flashcards" className={linkClass}>Memory Coach</NavLink>
+            <NavLink to="/neurolab" className={linkClass}>NeuroLab</NavLink>
             {user.role !== 'student' && <NavLink to="/manage" className={linkClass}>Manage</NavLink>}
             {user.role !== 'student' && <NavLink to="/students" className={linkClass}>Students</NavLink>}
           </nav>
@@ -82,7 +83,8 @@ export default function Navbar() {
           <NavLink to="/performance" className={linkClass}>Performance</NavLink>
           <NavLink to="/tutor" className={linkClass}>AI Tutor</NavLink>
           <NavLink to="/study-plan" className={linkClass}>Study Plan</NavLink>
-          <NavLink to="/flashcards" className={linkClass}>Flashcards</NavLink>
+          <NavLink to="/flashcards" className={linkClass}>Memory Coach</NavLink>
+          <NavLink to="/neurolab" className={linkClass}>NeuroLab</NavLink>
           {user.role !== 'student' && <NavLink to="/manage" className={linkClass}>Manage</NavLink>}
           {user.role !== 'student' && <NavLink to="/students" className={linkClass}>Students</NavLink>}
         </nav>

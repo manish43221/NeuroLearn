@@ -120,3 +120,19 @@ exports.getStudents = asyncHandler(async (req, res) => {
   });
   res.json(rows.sort((a, b) => a.average - b.average));
 });
+// GET /api/results/confidence - compact confidence/correctness signals for the signed-in learner
+exports.getConfidence = asyncHandler(async (req, res) => {
+  const results = await Result.find({ user: req.user._id }).sort('-createdAt').select('quizTitle createdAt answers.confidence answers.isCorrect answers.topic');
+  const summary = { highCorrect: 0, lowCorrect: 0, highIncorrect: 0, lowIncorrect: 0, total: 0 };
+  for (const result of results) {
+    for (const answer of result.answers || []) {
+      if (!answer.confidence) continue;
+      summary.total++;
+      if (answer.confidence === 'high' && answer.isCorrect) summary.highCorrect++;
+      else if (answer.confidence === 'low' && answer.isCorrect) summary.lowCorrect++;
+      else if (answer.confidence === 'high' && !answer.isCorrect) summary.highIncorrect++;
+      else if (answer.confidence === 'low' && !answer.isCorrect) summary.lowIncorrect++;
+    }
+  }
+  res.json(summary);
+});
