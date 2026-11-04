@@ -1,2 +1,13 @@
 node_modules
 .env
+# Environment variables and secrets
+
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build files
+dist/
+build/
