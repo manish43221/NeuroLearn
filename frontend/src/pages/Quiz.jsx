@@ -13,6 +13,7 @@ export default function Quiz() {
   const [quiz, setQuiz] = useState(null);
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState([]);
+  const [confidence, setConfidence] = useState([]);
   const [left, setLeft] = useState(null);
   const [busy, setBusy] = useState(false);
   const startedAt = useRef(Date.now());
@@ -24,6 +25,7 @@ export default function Quiz() {
       .then((r) => {
         setQuiz(r.data);
         setAnswers(new Array(r.data.questions.length).fill(-1));
+        setConfidence(new Array(r.data.questions.length).fill(''));
         answersRef.current = new Array(r.data.questions.length).fill(-1);
         setLeft(r.data.questions.length * 60); // 60 seconds per question
         startedAt.current = Date.now();
@@ -37,7 +39,7 @@ export default function Quiz() {
     setBusy(true);
     try {
       const { data } = await api.post(`/quizzes/${id}/submit`, {
-        answers: quiz.questions.map((q, i) => ({ questionId: q._id, selected: answersRef.current[i] })),
+        answers: quiz.questions.map((q, i) => ({ questionId: q._id, selected: answersRef.current[i], confidence: confidence[i] || 'medium' })),
         timeTaken: Math.round((Date.now() - startedAt.current) / 1000),
       });
       navigate(`/results/${data._id}`, { replace: true });
@@ -46,7 +48,7 @@ export default function Quiz() {
       setBusy(false);
       toast.error(errMsg(e));
     }
-  }, [quiz, id, navigate]);
+  }, [quiz, id, navigate, confidence]);
 
   // countdown timer, auto-submits at 0
   useEffect(() => {
@@ -90,6 +92,15 @@ export default function Quiz() {
               <span>{opt}</span>
             </button>
           ))}
+        </div>
+        <div className="mt-5 border-t border-slate-200 pt-4 dark:border-slate-700">
+          <p className="mb-2 text-sm font-semibold">How confident are you about this answer?</p>
+          <div className="flex flex-wrap gap-2">
+            {[['low','Not sure'],['medium','Somewhat sure'],['high','Very sure']].map(([value,label]) => (
+              <button key={value} type="button" onClick={() => setConfidence((old) => { const next=[...old]; next[current]=value; return next; })}
+                className={`rounded-lg border px-3 py-2 text-sm ${confidence[current]===value?'border-brand-600 bg-brand-50 text-brand-700 dark:bg-brand-900/30':'border-slate-200 dark:border-slate-700'}`}>{label}</button>
+            ))}
+          </div>
         </div>
       </div>
 

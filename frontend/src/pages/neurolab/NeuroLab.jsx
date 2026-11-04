@@ -1,0 +1,9 @@
+import { Link } from 'react-router-dom';
+const items = [
+  {to:'/neurolab/map',n:'01',title:'NeuroMap',desc:'See how concepts connect and where your understanding needs work.',tag:'KNOWLEDGE GRAPH'},
+  {to:'/neurolab/adaptive',n:'02',title:'Adaptive learning',desc:'Turn your quiz history into a focused next-step study plan.',tag:'PERSONALIZED PRACTICE'},
+  {to:'/flashcards',n:'03',title:'Memory coach',desc:'Generate revision cards and practise active recall.',tag:'SPACED REVISION'},
+  {to:'/neurolab/code-lab',n:'04',title:'Code thinking lab',desc:'Trace code, predict output and strengthen problem-solving.',tag:'CS PRACTICE'},
+  {to:'/neurolab/confidence',n:'05',title:'Confidence insights',desc:'Compare how sure you felt with how accurately you answered.',tag:'METACOGNITION'},
+];
+export default function NeuroLab(){return <main className="page neurolab-page"><div className="nl-eyebrow">YOUR LEARNING WORKSPACE</div><div className="nl-heading-row"><div><h1 className="nl-title">NeuroLab</h1><p className="nl-lead">Understand what you know. Find what to practise next.</p></div><span className="nl-mark">NL / 01</span></div><section className="nl-intro"><div><span className="nl-eyebrow">A MORE INTENTIONAL WAY TO LEARN</span><h2>Progress is more than a score.</h2><p>Use evidence from your learning activity to identify gaps, practise deliberately and revisit concepts before they fade.</p></div><div className="nl-intro-aside"><strong>5</strong><span>connected learning tools</span></div></section><div className="nl-section-head"><h2>Explore the lab</h2><span>SELECT A WORKSPACE</span></div><div className="nl-feature-list">{items.map(x=><Link to={x.to} className="nl-feature" key={x.to}><span className="nl-feature-num">{x.n}</span><div className="nl-feature-copy"><span className="nl-eyebrow">{x.tag}</span><h3>{x.title}</h3><p>{x.desc}</p></div><span className="nl-arrow">↗</span></Link>)}</div></main>}

@@ -1,0 +1,1 @@
+import {Link} from 'react-router-dom';export default function LearningCard({to,title,description,eyebrow}){return <Link className="nl-feature" to={to}><span className="nl-feature-copy"><span className="nl-eyebrow">{eyebrow}</span><h3>{title}</h3><p>{description}</p></span><span className="nl-arrow">↗</span></Link>}
