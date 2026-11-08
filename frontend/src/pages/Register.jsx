@@ -9,6 +9,7 @@ export default function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '', role: 'student' });
   const [busy, setBusy] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   if (user) return <Navigate to="/dashboard" replace />;
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
@@ -21,7 +22,12 @@ export default function Register() {
     if (form.password !== form.confirm) return toast.error('Passwords do not match');
     setBusy(true);
     try {
-      await register({ name: form.name, email: form.email, password: form.password, role: form.role });
+      const result = await register({ name: form.name, email: form.email, password: form.password, role: form.role });
+      if (result.status === 'pending') {
+        setSubmitted(true);
+        toast.success('Teacher application submitted');
+        return;
+      }
       toast.success('Account created!');
       navigate('/dashboard', { replace: true });
     } catch (err) {
@@ -34,6 +40,15 @@ export default function Register() {
   return (
     <div className="mx-auto max-w-md px-4 py-12">
       <form onSubmit={submit} className="card space-y-4">
+        {submitted ? (
+          <div className="space-y-4 text-center">
+            <h1 className="text-2xl font-bold">Application submitted</h1>
+            <p className="text-sm text-slate-600 dark:text-slate-300">
+              Your teacher application is waiting for admin approval. You can log in after it is approved.
+            </p>
+            <Link to="/login" className="btn-primary inline-block">Go to login</Link>
+          </div>
+        ) : <>
         <h1 className="text-2xl font-bold">Create your account</h1>
         <div><label className="label">Full name</label><input className="input" value={form.name} onChange={set('name')} autoFocus /></div>
         <div><label className="label">Email</label><input className="input" type="email" value={form.email} onChange={set('email')} /></div>
@@ -50,6 +65,7 @@ export default function Register() {
         </div>
         <button className="btn-primary w-full" disabled={busy}>{busy ? 'Creating...' : 'Sign up'}</button>
         <p className="text-center text-sm text-slate-500">Already registered? <Link to="/login" className="font-semibold text-brand-600">Log in</Link></p>
+        </>}
       </form>
     </div>
   );

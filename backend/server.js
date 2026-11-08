@@ -44,4 +44,14 @@ app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-connectDB().then(() => app.listen(PORT, () => console.log(`NeuroLearn API running on http://localhost:${PORT}`)));
+connectDB().then(() => {
+  const server = app.listen(PORT, () => console.log(`NeuroLearn API running on http://localhost:${PORT}`));
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`Port ${PORT} is already in use. Stop the other backend process or set a different PORT.`);
+    } else {
+      console.error('API server failed to start:', err);
+    }
+    process.exit(1);
+  });
+});
