@@ -11,14 +11,16 @@ export default function Manage() {
   const [tab, setTab] = useState('courses');
   const [courses, setCourses] = useState(null);
   const [users, setUsers] = useState([]);
+  const [applications, setApplications] = useState([]);
   const [overview, setOverview] = useState(null);
 
   const loadCourses = () => api.get('/courses', { params: { mine: 'true' } }).then((r) => setCourses(r.data)).catch((e) => toast.error(errMsg(e)));
   const loadUsers = () => api.get('/users').then((r) => setUsers(r.data)).catch((e) => toast.error(errMsg(e)));
+  const loadApplications = () => api.get('/users/teacher-applications').then((r) => setApplications(r.data)).catch((e) => toast.error(errMsg(e)));
 
   useEffect(() => {
     loadCourses();
-    if (isAdmin) { loadUsers(); api.get('/users/overview').then((r) => setOverview(r.data)).catch(() => {}); }
+    if (isAdmin) { loadUsers(); loadApplications(); api.get('/users/overview').then((r) => setOverview(r.data)).catch(() => {}); }
   }, [isAdmin]);
 
   const delCourse = async (id) => {
@@ -31,6 +33,14 @@ export default function Manage() {
   const delUser = async (id) => {
     if (!confirm('Delete this user and all their data?')) return;
     try { await api.delete(`/users/${id}`); loadUsers(); } catch (e) { toast.error(errMsg(e)); }
+  };
+  const reviewApplication = async (id, decision) => {
+    try {
+      const response = await api.post(`/users/teacher-applications/${id}/${decision}`);
+      toast.success(response.data.message);
+      loadApplications();
+      if (decision === 'approve') loadUsers();
+    } catch (e) { toast.error(errMsg(e)); }
   };
 
   return (
@@ -48,7 +58,7 @@ export default function Manage() {
 
       {isAdmin && (
         <div className="flex gap-2">
-          {['courses', 'users'].map((t) => <button key={t} onClick={() => setTab(t)} className={`btn capitalize ${tab === t ? 'bg-brand-600 text-white' : 'btn-outline'}`}>{t}</button>)}
+          {['courses', 'users', 'teacher applications'].map((t) => <button key={t} onClick={() => setTab(t)} className={`btn capitalize ${tab === t ? 'bg-brand-600 text-white' : 'btn-outline'}`}>{t}{t === 'teacher applications' && applications.length > 0 ? ` (${applications.length})` : ''}</button>)}
         </div>
       )}
 
@@ -89,6 +99,27 @@ export default function Manage() {
                   <td className="text-right">{u._id !== user._id && <button className="btn-danger !px-3 !py-1" onClick={() => delUser(u._id)}>Delete</button>}</td>
                 </tr>
               ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {tab === 'teacher applications' && isAdmin && (
+        <div className="card overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead><tr className="text-left text-slate-500"><th className="py-2">Name</th><th>Email</th><th>Requested</th><th /></tr></thead>
+            <tbody>
+              {applications.map((application) => (
+                <tr key={application._id} className="border-t border-slate-100 dark:border-slate-800">
+                  <td className="py-3 font-medium">{application.name}</td>
+                  <td>{application.email}</td>
+                  <td>{new Date(application.submittedAt).toLocaleDateString()}</td>
+                  <td className="space-x-2 text-right">
+                    <button className="btn-primary !px-3 !py-1" onClick={() => reviewApplication(application._id, 'approve')}>Approve</button>
+                    <button className="btn-danger !px-3 !py-1" onClick={() => reviewApplication(application._id, 'reject')}>Reject</button>
+                  </td>
+                </tr>
+              ))}
+              {!applications.length && <tr><td colSpan="4" className="py-6 text-center text-slate-500">No pending teacher applications.</td></tr>}
             </tbody>
           </table>
         </div>

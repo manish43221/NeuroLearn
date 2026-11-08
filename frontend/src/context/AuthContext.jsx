@@ -25,7 +25,10 @@ export function AuthProvider({ children }) {
   };
 
   const login = async (email, password) => authenticate((await api.post('/auth/login', { email, password })).data);
-  const register = async (payload) => authenticate((await api.post('/auth/register', payload)).data);
+  const register = async (payload) => {
+    const data = (await api.post('/auth/register', payload)).data;
+    return data.status === 'pending' ? data : authenticate(data);
+  };
   const logout = () => {
     localStorage.removeItem('nl_token');
     setUser(null);
