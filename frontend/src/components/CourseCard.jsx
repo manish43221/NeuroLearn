@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import ProgressBar from './ProgressBar';
 
-export default function CourseCard({ course, progress, showProgress = false }) {
+export default function CourseCard({ course, progress, showProgress = false, onEnroll, enrolling = false }) {
   return (
     <Link to={`/courses/${course._id}`} className="card flex flex-col gap-3 transition hover:-translate-y-0.5 hover:shadow-md">
       <div className="flex items-center justify-between">

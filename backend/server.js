@@ -38,9 +38,20 @@ app.use('/api/courses', require('./routes/courseRoutes'));
 app.use('/api/quizzes', require('./routes/quizRoutes'));
 app.use('/api/results', require('./routes/resultRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/ai', require('./routes/airoutes'));
 
 app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-connectDB().then(() => app.listen(PORT, () => console.log(`NeuroLearn API running on http://localhost:${PORT}`)));
+connectDB().then(() => {
+  const server = app.listen(PORT, () => console.log(`NeuroLearn API running on http://localhost:${PORT}`));
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`Port ${PORT} is already in use. Stop the other backend process or set a different PORT.`);
+    } else {
+      console.error('API server failed to start:', err);
+    }
+    process.exit(1);
+  });
+});
