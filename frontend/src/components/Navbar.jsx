@@ -1,94 +1,273 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 
-const linkClass = ({ isActive }) =>
-  `whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium transition ${
-    isActive ? 'bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-200' : 'text-slate-600 hover:text-brand-600 dark:text-slate-400'
-  }`;
+const menu = [
+  {
+    title: 'OVERVIEW',
+    items: [
+      { to: '/dashboard', icon: '◫', label: 'Dashboard' },
+    ],
+  },
+  {
+    title: 'LEARNING',
+    items: [
+      { to: '/courses', icon: '▦', label: 'Explore Courses' },
+      { to: '/my-courses', icon: '▣', label: 'My Courses' },
+      { to: '/quizzes', icon: '✎', label: 'AI Quizzes' },
+      { to: '/flashcards', icon: '▤', label: 'Memory Coach' },
+    ],
+  },
+  {
+    title: 'INTELLIGENCE',
+    items: [
+      { to: '/performance', icon: '⌁', label: 'Performance' },
+      { to: '/tutor', icon: '✧', label: 'AI Tutor' },
+      { to: '/study-plan', icon: '◷', label: 'Study Plan' },
+      { to: '/neurolab', icon: '◎', label: 'NeuroLab' },
+    ],
+  },
+];
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { dark, toggle } = useTheme();
   const navigate = useNavigate();
+
   const [q, setQ] = useState('');
+  const [collapsed, setCollapsed] = useState(() => {
+    return localStorage.getItem('nl_sidebar_collapsed') === 'true';
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle(
+      'nl-sidebar-collapsed',
+      collapsed
+    );
+
+    localStorage.setItem(
+      'nl_sidebar_collapsed',
+      String(collapsed)
+    );
+
+    return () => {
+      document.documentElement.classList.remove(
+        'nl-sidebar-collapsed'
+      );
+    };
+  }, [collapsed]);
 
   const search = (e) => {
     e.preventDefault();
-    navigate(`/courses?search=${encodeURIComponent(q.trim())}`);
+
+    if (q.trim()) {
+      navigate(`/courses?search=${encodeURIComponent(q.trim())}`);
+    }
   };
 
+  const adminItems = [
+    { to: '/manage', icon: '⚙', label: 'Manage' },
+    { to: '/students', icon: '♙', label: 'Students' },
+  ];
+
+  const renderLink = (item) => (
+    <NavLink
+      key={item.to}
+      to={item.to}
+      title={collapsed ? item.label : undefined}
+      className={({ isActive }) =>
+        `nl-nav-link ${isActive ? 'active' : ''}`
+      }
+    >
+      <span className="nl-nav-icon">{item.icon}</span>
+      <span>{item.label}</span>
+      <span className="nl-nav-indicator" />
+    </NavLink>
+  );
+
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur print:hidden dark:border-slate-800 dark:bg-slate-900/90">
-      <div className="mx-auto flex w-full max-w-[1500px] items-center gap-3 px-4 py-3">
-        <Link to={user ? '/dashboard' : '/'} className="flex shrink-0 items-center gap-2 text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">
-          <img src="/neurolearn-mark.svg" alt="" className="h-9 w-9 rounded-xl shadow-sm shadow-blue-900/20" />
-          <span>Neuro<span className="text-brand-600 dark:text-brand-400">Learn</span></span>
+    <>
+      {/* SIDEBAR */}
+      <aside className="nl-sidebar">
+
+        <Link
+          to={user ? '/dashboard' : '/'}
+          className="nl-brand"
+        >
+          <span className="nl-brand-icon">N</span>
+
+          <span>
+            <strong>NeuroLearn</strong>
+            <small>INTELLIGENT LEARNING</small>
+          </span>
         </Link>
 
         {user && (
-          <nav className="hidden shrink-0 items-center gap-1 2xl:flex">
-            <NavLink to="/dashboard" className={linkClass}>Dashboard</NavLink>
-            <NavLink to="/courses" className={linkClass}>Courses</NavLink>
-            <NavLink to="/my-courses" className={linkClass}>My Courses</NavLink>
-            <NavLink to="/quizzes" className={linkClass}>Quizzes</NavLink>
-            <NavLink to="/performance" className={linkClass}>Performance</NavLink>
-            <NavLink to="/tutor" className={linkClass}>AI Tutor</NavLink>
-            <NavLink to="/study-plan" className={linkClass}>Study Plan</NavLink>
-            <NavLink to="/flashcards" className={linkClass}>Memory Coach</NavLink>
-            <NavLink to="/neurolab" className={linkClass}>NeuroLab</NavLink>
-            {user.role !== 'student' && <NavLink to="/manage" className={linkClass}>Manage</NavLink>}
-            {user.role !== 'student' && <NavLink to="/students" className={linkClass}>Students</NavLink>}
-          </nav>
-        )}
+          <>
+            <div className="nl-sidebar-user">
+              <div className="nl-avatar">
+                {user.name?.[0]?.toUpperCase() || 'U'}
+              </div>
 
-        <div className="ml-auto flex items-center gap-2">
-          {user && (
-            <form onSubmit={search} className="hidden 2xl:block">
-              <input className="input w-36 !py-1.5" placeholder="Search courses" value={q} onChange={(e) => setQ(e.target.value)} />
-            </form>
-          )}
+              <div className="min-w-0">
+                <strong>{user.name}</strong>
+                <small>{user.role || 'Student'}</small>
+              </div>
+
+              <span className="nl-online-dot" />
+            </div>
+
+            <div className="nl-sidebar-scroll">
+
+              {menu.map((group) => (
+                <div
+                  className="nl-menu-group"
+                  key={group.title}
+                >
+                  <p className="nl-menu-title">
+                    {group.title}
+                  </p>
+
+                  <nav className="nl-menu">
+                    {group.items.map(renderLink)}
+                  </nav>
+                </div>
+              ))}
+
+              {user.role !== 'student' && (
+                <div className="nl-menu-group">
+                  <p className="nl-menu-title">
+                    ADMINISTRATION
+                  </p>
+
+                  <nav className="nl-menu">
+                    {adminItems.map(renderLink)}
+                  </nav>
+                </div>
+              )}
+
+            </div>
+
+            <div className="nl-sidebar-bottom">
+              <Link
+                to="/profile"
+                className="nl-profile-link"
+                title={collapsed ? 'My Profile' : undefined}
+              >
+                <span className="nl-profile-icon">♙</span>
+                <span>My Profile</span>
+              </Link>
+
+              <button
+                className="nl-logout"
+                onClick={() => {
+                  logout();
+                  navigate('/');
+                }}
+                title={collapsed ? 'Sign out' : undefined}
+              >
+                <span>↪</span>
+                <span>Sign out</span>
+              </button>
+            </div>
+          </>
+        )}
+      </aside>
+
+      {/* TOP HEADER */}
+      <header className="nl-topbar">
+
+        <div className="nl-topbar-left">
+
           <button
             type="button"
+            className="nl-collapse-btn"
+            onClick={() => setCollapsed((prev) => !prev)}
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-expanded={!collapsed}
+          >
+            {collapsed ? '☰' : '◧'}
+          </button>
+
+          <div className="nl-mobile-brand">
+            Neuro<span>Learn</span>
+          </div>
+
+          <div className="nl-greeting">
+            <strong>
+              Hi, {user?.name?.split(' ')[0] || 'Learner'} 👋
+            </strong>
+
+            <small>
+              Welcome back to your learning space
+            </small>
+          </div>
+
+        </div>
+
+        <div className="nl-topbar-actions">
+
+          {user && (
+            <form
+              className="nl-search"
+              onSubmit={search}
+            >
+              <span>⌕</span>
+
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Search courses..."
+                aria-label="Search courses"
+              />
+
+              <kbd>↵</kbd>
+            </form>
+          )}
+
+          <button
+            type="button"
+            className="nl-icon-button"
             onClick={toggle}
-            className="rounded-lg p-2 text-lg hover:bg-slate-100 dark:hover:bg-slate-800"
             title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
             aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
           >
-            {dark ? '☀️' : '🌙'}
+            {dark ? '☀' : '☾'}
           </button>
+
           {user ? (
-            <>
-              <Link to="/profile" title="Profile" className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 font-bold text-white">
-                {user.name[0].toUpperCase()}
-              </Link>
-              <button className="btn-outline !py-1.5" onClick={() => { logout(); navigate('/'); }}>Logout</button>
-            </>
+            <Link
+              to="/profile"
+              className="nl-top-profile"
+            >
+              <span className="nl-top-avatar">
+                {user.name?.[0]?.toUpperCase() || 'U'}
+              </span>
+
+              <span className="nl-top-profile-name">
+                <strong>{user.name}</strong>
+                <small>{user.role || 'Student'}</small>
+              </span>
+
+              <span className="nl-chevron">⌄</span>
+            </Link>
           ) : (
             <>
-              <Link to="/login" className="btn-outline !py-1.5">Login</Link>
-              <Link to="/register" className="btn-primary !py-1.5">Get started</Link>
+              <Link to="/login" className="btn-outline">
+                Login
+              </Link>
+
+              <Link to="/register" className="btn-primary">
+                Get started
+              </Link>
             </>
           )}
-        </div>
-      </div>
 
-      {user && (
-        <nav className="mx-auto flex w-full max-w-[1500px] flex-wrap gap-1 border-t border-slate-100 px-4 py-2 2xl:hidden dark:border-slate-800">
-          <NavLink to="/dashboard" className={linkClass}>Dashboard</NavLink>
-          <NavLink to="/courses" className={linkClass}>Courses</NavLink>
-          <NavLink to="/my-courses" className={linkClass}>My Courses</NavLink>
-          <NavLink to="/quizzes" className={linkClass}>Quizzes</NavLink>
-          <NavLink to="/performance" className={linkClass}>Performance</NavLink>
-          <NavLink to="/tutor" className={linkClass}>AI Tutor</NavLink>
-          <NavLink to="/study-plan" className={linkClass}>Study Plan</NavLink>
-          <NavLink to="/flashcards" className={linkClass}>Memory Coach</NavLink>
-          <NavLink to="/neurolab" className={linkClass}>NeuroLab</NavLink>
-          {user.role !== 'student' && <NavLink to="/manage" className={linkClass}>Manage</NavLink>}
-          {user.role !== 'student' && <NavLink to="/students" className={linkClass}>Students</NavLink>}
-        </nav>
-      )}
-    </header>
+        </div>
+      </header>
+    </>
   );
 }
