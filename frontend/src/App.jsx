@@ -34,37 +34,39 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+      <main className={user ? 'nl-app-content' : 'nl-public-content'}>
+        <Routes>
+          <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        <Route path="/dashboard" element={<P><Dashboard /></P>} />
-        <Route path="/courses" element={<P><Courses /></P>} />
-        <Route path="/courses/new" element={<P roles={['teacher', 'admin']}><AddCourse /></P>} />
-        <Route path="/courses/:id" element={<P><CourseDetail /></P>} />
-        <Route path="/my-courses" element={<P><MyCourses /></P>} />
-        <Route path="/quizzes" element={<P><Quizzes /></P>} />
-        <Route path="/quiz/:id" element={<P><Quiz /></P>} />
-        <Route path="/results/:id" element={<P><Result /></P>} />
-        <Route path="/performance" element={<P><Performance /></P>} />
-        <Route path="/profile" element={<P><Profile /></P>} />
-        <Route path="/tutor" element={<P><Tutor /></P>} />
-        <Route path="/study-plan" element={<P><StudyPlan /></P>} />
-        <Route path="/flashcards" element={<P><Flashcards /></P>} />
-        <Route path="/neurolab" element={<P><NeuroLab /></P>} />
-        <Route path="/neurolab/map" element={<P><NeuroMap /></P>} />
-        <Route path="/neurolab/adaptive" element={<P><AdaptiveLearning /></P>} />
-        <Route path="/neurolab/code-lab" element={<P><CodeThinkingLab /></P>} />
-        <Route path="/neurolab/confidence" element={<P><ConfidenceInsights /></P>} />
-        <Route path="/students" element={<P roles={['teacher', 'admin']}><Students /></P>} />
+          <Route path="/dashboard" element={<P><Dashboard /></P>} />
+          <Route path="/courses" element={<P><Courses /></P>} />
+          <Route path="/courses/new" element={<P roles={['teacher', 'admin']}><AddCourse /></P>} />
+          <Route path="/courses/:id" element={<P><CourseDetail /></P>} />
+          <Route path="/my-courses" element={<P><MyCourses /></P>} />
+          <Route path="/quizzes" element={<P><Quizzes /></P>} />
+          <Route path="/quiz/:id" element={<P><Quiz /></P>} />
+          <Route path="/results/:id" element={<P><Result /></P>} />
+          <Route path="/performance" element={<P><Performance /></P>} />
+          <Route path="/profile" element={<P><Profile /></P>} />
+          <Route path="/tutor" element={<P><Tutor /></P>} />
+          <Route path="/study-plan" element={<P><StudyPlan /></P>} />
+          <Route path="/flashcards" element={<P><Flashcards /></P>} />
+          <Route path="/neurolab" element={<P><NeuroLab /></P>} />
+          <Route path="/neurolab/map" element={<P><NeuroMap /></P>} />
+          <Route path="/neurolab/adaptive" element={<P><AdaptiveLearning /></P>} />
+          <Route path="/neurolab/code-lab" element={<P><CodeThinkingLab /></P>} />
+          <Route path="/neurolab/confidence" element={<P><ConfidenceInsights /></P>} />
+          <Route path="/students" element={<P roles={['teacher', 'admin']}><Students /></P>} />
 
-        <Route path="/manage" element={<P roles={['teacher', 'admin']}><Manage /></P>} />
-        <Route path="/manage/course/new" element={<P roles={['teacher', 'admin']}><CourseForm /></P>} />
-        <Route path="/manage/course/:id" element={<P roles={['teacher', 'admin']}><CourseForm /></P>} />
+          <Route path="/manage" element={<P roles={['teacher', 'admin']}><Manage /></P>} />
+          <Route path="/manage/course/new" element={<P roles={['teacher', 'admin']}><CourseForm /></P>} />
+          <Route path="/manage/course/:id" element={<P roles={['teacher', 'admin']}><CourseForm /></P>} />
 
-        <Route path="*" element={<div className="page text-center"><h1 className="text-4xl font-bold">404</h1><p className="mt-2 text-slate-500">Page not found</p></div>} />
-      </Routes>
+          <Route path="*" element={<div className="page text-center"><h1 className="text-4xl font-bold">404</h1><p className="mt-2 text-slate-500">Page not found</p></div>} />
+        </Routes>
+      </main>
     </>
   );
 }
