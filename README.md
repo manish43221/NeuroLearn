@@ -29,7 +29,7 @@ neurolearn/
 ```
 
 ## Run locally
-Requirements: Node.js 18+ and MongoDB (local) or a MongoDB Atlas URI.
+Requirements: Node.js 18+ and MongoDB (local) or a MongoDB Atlas URI. The backend uses the case-sensitive database name `neuroLearn`.
 
 ```bash
 # 1) Backend

@@ -23,6 +23,7 @@ const teacherApplicationSchema = new mongoose.Schema(
 );
 
 teacherApplicationSchema.methods.matchPassword = function (plain) {
+  if (!this.passwordHash) return false;
   return bcrypt.compare(plain, this.passwordHash);
 };
 
