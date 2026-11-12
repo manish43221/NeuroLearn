@@ -1134,22 +1134,37 @@ html.dark .nl-intro {
   display: block;
 }
 
+.nl-topbar-left {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.nl-greeting {
+  min-width: 0;
+}
+
 .nl-greeting strong {
   display: block;
   color: var(--ink);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
+  line-height: 1.35;
 }
 
 .nl-greeting small {
   display: block;
   margin-top: 3px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
+  line-height: 1.35;
 }
 
 .nl-topbar-actions {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 15px;
 }
@@ -1244,10 +1259,17 @@ html.dark .nl-intro {
   text-decoration: none;
 }
 
-/* Dashboard content positioning */
+/* Main content positioning */
 
-.dashboard-theme {
+.nl-app-content {
   margin-left: 248px;
+  padding-top: 70px;
+  min-height: 100vh;
+  transition: margin-left .3s ease;
+}
+
+.nl-public-content {
+  min-height: 100vh;
   padding-top: 70px;
 }
 
@@ -1261,7 +1283,7 @@ html.dark .nl-intro {
     padding: 0 18px;
   }
 
-  .dashboard-theme {
+  .nl-app-content {
     margin-left: 215px;
   }
 
@@ -1365,10 +1387,14 @@ html.dark .nl-intro {
     display: none;
   }
 
-  .dashboard-theme {
+  .nl-app-content {
     margin-left: 0;
     padding-top: 65px;
     padding-bottom: 75px;
+  }
+
+  .nl-public-content {
+    padding-top: 65px;
   }
 }
 
@@ -1398,12 +1424,10 @@ html.dark .nl-intro {
 /* Smooth resizing */
 
 .nl-sidebar,
-.nl-topbar,
-.dashboard-theme {
+.nl-topbar {
   transition:
     width .3s ease,
-    left .3s ease,
-    margin-left .3s ease;
+    left .3s ease;
 }
 
 /* Collapsed desktop sidebar */
@@ -1419,7 +1443,7 @@ html.dark .nl-intro {
     left: 78px;
   }
 
-  html.nl-sidebar-collapsed .dashboard-theme {
+  html.nl-sidebar-collapsed .nl-app-content {
     margin-left: 78px;
   }
 
