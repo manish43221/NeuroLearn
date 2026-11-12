@@ -223,10 +223,8 @@ async function seedDatabase() {
 
   console.log('Connecting to MongoDB...');
 
-  // Explicitly use the existing database name.
-  // This prevents the neuroLearn/neurolearn case mismatch.
   await mongoose.connect(process.env.MONGO_URI, {
-    dbName: 'neurolearn',
+    dbName: 'neuroLearn',
   });
 
   console.log('Connected to database:', mongoose.connection.name);

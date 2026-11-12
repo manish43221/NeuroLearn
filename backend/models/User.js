@@ -37,6 +37,7 @@ userSchema.pre('save', async function () {
 });
 
 userSchema.methods.matchPassword = function (plain) {
+  if (!this.password) return false;
   return bcrypt.compare(plain, this.password);
 };
 
