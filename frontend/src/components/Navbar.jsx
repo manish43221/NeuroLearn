@@ -42,6 +42,11 @@ export default function Navbar() {
   });
 
   useEffect(() => {
+    if (!user) {
+      document.documentElement.classList.remove('nl-sidebar-collapsed');
+      return;
+    }
+
     document.documentElement.classList.toggle(
       'nl-sidebar-collapsed',
       collapsed
@@ -57,7 +62,7 @@ export default function Navbar() {
         'nl-sidebar-collapsed'
       );
     };
-  }, [collapsed]);
+  }, [collapsed, user]);
 
   const search = (e) => {
     e.preventDefault();
@@ -90,7 +95,7 @@ export default function Navbar() {
   return (
     <>
       {/* SIDEBAR */}
-      <aside className="nl-sidebar">
+      <aside className={`nl-sidebar${user ? '' : ' nl-sidebar-public'}`}>
 
         <Link
           to={user ? '/dashboard' : '/'}
@@ -177,7 +182,7 @@ export default function Navbar() {
       </aside>
 
       {/* TOP HEADER */}
-      <header className="nl-topbar">
+      <header className={`nl-topbar${user ? '' : ' nl-topbar-public'}`}>
 
         <div className="nl-topbar-left">
 
@@ -192,9 +197,9 @@ export default function Navbar() {
             {collapsed ? '☰' : '◧'}
           </button>
 
-          <div className="nl-mobile-brand">
+          <Link to={user ? '/dashboard' : '/'} className="nl-mobile-brand">
             Neuro<span>Learn</span>
-          </div>
+          </Link>
 
           <div className="nl-greeting">
             <strong>

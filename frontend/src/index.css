@@ -36,7 +36,13 @@ header.sticky nav a[aria-current="page"] { background:var(--sage-soft)!important
 html.dark .dashboard-theme .dashboard-hero { background:#2B352B!important; color:#EDF0E9!important; border-color:#3E4B3D!important; }
 html.dark .dashboard-theme .dashboard-hero p { color:#C0CCBB!important; }
 html.dark .dashboard-theme .dashboard-action { background:#71886D!important; }
-.feature-card-face { border-radius:10px; }
+.feature-card { min-height:230px; perspective:1000px; }
+.feature-card-inner { display:grid; min-height:230px; transform-style:preserve-3d; transition:transform .5s ease; }
+.feature-card:hover .feature-card-inner,
+.feature-card:focus-visible .feature-card-inner { transform:rotateY(180deg); }
+.feature-card-face { grid-area:1 / 1; min-height:230px; padding:20px; border-radius:10px; backface-visibility:hidden; }
+.feature-card-back { transform:rotateY(180deg); }
+@media(prefers-reduced-motion:reduce){.feature-card-inner{transition:none}}
 .nl-eyebrow { color:var(--sage); font-size:10px; letter-spacing:.14em; font-weight:700; }
 .nl-title { margin-top:8px; color:var(--ink); font-size:clamp(2rem,4vw,3rem); line-height:1.08; letter-spacing:-.045em; font-weight:650; }
 .nl-lead { margin-top:10px; color:var(--muted); max-width:680px; font-size:15px; line-height:1.7; }
@@ -100,7 +106,7 @@ html.dark .nl-intro { background:#2B352B; border-color:#3E4B3D; }
 .nl-big-number { display:block; margin:14px 0 4px; font-size:34px; font-weight:650; letter-spacing:-.04em; color:var(--ink); }
 @media(max-width:640px){.nl-intro{grid-template-columns:1fr;padding:22px}.nl-intro-aside{border-left:0;border-top:1px solid #C9D3C5;padding:15px 0 0}.nl-feature{grid-template-columns:32px 1fr 20px;gap:10px}.nl-plan,.nl-recommend{align-items:flex-start;flex-direction:column}.nl-rec-action{width:100%;justify-content:space-between}.nl-answer-row{flex-direction:column}.nl-heading-row{align-items:flex-start}}
 /* ==============================
-   NEUROLEARN DESIGN SYSTEM
+   NEUROLEARN DESIGN SYSTEM */
 
 :root {
   --canvas: #f4f6fa;
@@ -156,7 +162,7 @@ body > #root {
 }
 
 /* ==============================
-   GLOBAL COMPONENTS
+   GLOBAL COMPONENTS */
 
 @layer components {
 
@@ -237,7 +243,7 @@ body > #root {
 }
 
 /* ==============================
-   NAVBAR
+   NAVBAR */
 
 header.sticky {
   background: color-mix(in srgb, var(--surface) 94%, transparent) !important;
@@ -264,7 +270,7 @@ header.sticky nav a[aria-current="page"] {
 }
 
 /* ==============================
-   DASHBOARD
+   DASHBOARD */
 
 .dashboard-theme {
   min-height: calc(100vh - 4rem);
@@ -303,7 +309,7 @@ header.sticky nav a[aria-current="page"] {
 }
 
 /* ==============================
-   STAT CARDS AND PROGRESS
+   STAT CARDS AND PROGRESS */
 
 .dashboard-theme .card {
   border-radius: 20px;
@@ -330,7 +336,7 @@ header.sticky nav a[aria-current="page"] {
 }
 
 /* ==============================
-   LANDING PAGE
+   LANDING PAGE */
 
 .feature-card-face {
   border-radius: 20px;
@@ -423,7 +429,7 @@ html.dark .nl-intro {
 }
 
 /* ==============================
-   SECTION HEADINGS
+   SECTION HEADINGS */
 
 .nl-section-head {
   display: flex;
@@ -448,7 +454,7 @@ html.dark .nl-intro {
 }
 
 /* ==============================
-   FEATURE LIST
+   FEATURE LIST */
 
 .nl-feature-list {
   border-top: 1px solid var(--line);
@@ -503,7 +509,7 @@ html.dark .nl-intro {
 }
 
 /* ==============================
-   ANALYTICS
+   ANALYTICS */
 
 .nl-legend {
   display: flex;
@@ -586,7 +592,7 @@ html.dark .nl-intro {
 }
 
 /* ==============================
-   EMPTY STATES AND NOTES
+   EMPTY STATES AND NOTES */
 
 .nl-empty {
   margin-top: 28px;
@@ -635,7 +641,7 @@ html.dark .nl-intro {
 }
 
 /* ==============================
-   STUDY PLAN
+   STUDY PLAN */
 
 .nl-plan {
   display: flex;
@@ -711,7 +717,7 @@ html.dark .nl-intro {
 }
 
 /* ==============================
-   CODE LEARNING
+   CODE LEARNING */
 
 .nl-code-card {
   margin-top: 28px;
@@ -808,7 +814,7 @@ html.dark .nl-intro {
 }
 
 /* ==============================
-   SCROLLBAR
+   SCROLLBAR */
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -829,7 +835,7 @@ html.dark .nl-intro {
 }
 
 /* ==============================
-   RESPONSIVE
+   RESPONSIVE */
 
 @media(max-width: 768px) {
   .nl-intro {
@@ -881,7 +887,7 @@ html.dark .nl-intro {
 
 
 /* =====================================
-   NEUROLEARN SIDEBAR + TOPBAR
+   NEUROLEARN SIDEBAR + TOPBAR */
 
 .nl-sidebar {
   position: fixed;
@@ -896,6 +902,10 @@ html.dark .nl-intro {
   background: #0c1422;
   border-right: 1px solid #202e42;
   color: #e2e8f0;
+}
+
+.nl-sidebar-public {
+  display: none;
 }
 
 .nl-brand {
@@ -1111,6 +1121,19 @@ html.dark .nl-intro {
   backdrop-filter: blur(18px);
 }
 
+.nl-topbar-public {
+  left: 0;
+}
+
+.nl-topbar-public .nl-collapse-btn,
+.nl-topbar-public .nl-greeting {
+  display: none;
+}
+
+.nl-topbar-public .nl-mobile-brand {
+  display: block;
+}
+
 .nl-greeting strong {
   display: block;
   color: var(--ink);
@@ -1215,6 +1238,10 @@ html.dark .nl-intro {
 
 .nl-mobile-brand {
   display: none;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 800;
+  text-decoration: none;
 }
 
 /* Dashboard content positioning */

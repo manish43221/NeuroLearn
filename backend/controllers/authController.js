@@ -65,7 +65,7 @@ exports.login = asyncHandler(async (req, res) => {
       email,
       status: { $in: ['pending', 'processing'] },
     }).select('+passwordHash');
-    if (application && (await application.matchPassword(password))) {
+    if (application && application.passwordHash && (await application.matchPassword(password))) {
       throw new ApiError(403, 'Your teacher application is awaiting admin approval');
     }
     throw new ApiError(401, 'Invalid email or password');
