@@ -62,6 +62,7 @@ All AI output is parsed and validated (4 options, valid answer index, no duplica
 | Courses | `GET/POST /api/courses`, `GET/PUT/DELETE /api/courses/:id`, `GET /api/courses/my`, `POST/DELETE /api/courses/:id/enroll`, `POST/DELETE /api/courses/:id/lessons/:lessonId/complete` |
 | Quizzes | `POST /api/quizzes/generate`, `GET /api/quizzes`, `GET /api/quizzes/:id`, `POST /api/quizzes/:id/submit`, `DELETE /api/quizzes/:id` |
 | Results | `GET /api/results`, `GET /api/results/:id`, `GET /api/results/stats`, `GET /api/results/weak-topics`, `GET /api/results/leaderboard` |
+| Memory Coach | `GET/POST /api/flashcards`, `GET /api/flashcards?due=true`, `POST /api/flashcards/generate`, `PATCH/DELETE /api/flashcards/:id`, `POST /api/flashcards/:id/reviews`, `GET /api/flashcards/stats` |
 | Admin | `GET /api/users`, `GET /api/users/overview`, `PUT /api/users/:id/role`, `DELETE /api/users/:id` |
 
 Send `Authorization: Bearer <token>` on all routes except register/login.
