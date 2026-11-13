@@ -47,13 +47,67 @@ npm run dev                 # http://localhost:5173
 
 `npm run seed` can be repeated and keeps existing non-demo data. The login page lists all six demo accounts and can fill their credentials for you.
 
-## AI setup
-`AI_PROVIDER=mock` (default) works with no key using a built-in question bank (Arrays, Recursion, Sorting, Trees, SQL Joins, Normalization).
-For real AI on any topic set in `backend/.env`:
-- Gemini: `AI_PROVIDER=gemini`, `GEMINI_API_KEY=...` (free key: aistudio.google.com)
-- OpenAI: `AI_PROVIDER=openai`, `OPENAI_API_KEY=...`
-Model names live in `GEMINI_MODEL` / `OPENAI_MODEL`; change them if a model is retired.
-All AI output is parsed and validated (4 options, valid answer index, no duplicates) before saving; on failure the app falls back to the offline bank.
+## AI Setup
+
+NeuroLearn supports multiple AI providers for dynamic quiz generation. You can switch between providers using environment variables in `backend/.env`.
+
+### Supported AI Providers
+
+`AI_PROVIDER=mock` (default) works without an API key using a built-in offline question bank covering Arrays, Recursion, Sorting, Trees, SQL Joins, and Normalization.
+
+For AI-powered question generation on any topic, configure one of the following providers:
+
+- **Gemini:** `AI_PROVIDER=gemini`, `GEMINI_API_KEY=...`
+  - Get your API key: https://aistudio.google.com/
+
+- **OpenAI:** `AI_PROVIDER=openai`, `OPENAI_API_KEY=...`
+  - Get your API key: https://platform.openai.com/api-keys
+
+- **OpenRouter:** `AI_PROVIDER=openrouter`, `OPENROUTER_API_KEY=...`
+  - Get your API key: https://openrouter.ai/keys
+  - Supports multiple AI models through a single API.
+
+### Environment Configuration
+
+Add the selected provider's configuration to `backend/.env`.
+
+**OpenRouter Example:**
+```env
+AI_PROVIDER=openrouter
+OPENROUTER_API_KEY=your_openrouter_api_key
+OPENROUTER_MODEL=your_model_name
+```
+
+**Gemini Example:**
+```env
+AI_PROVIDER=gemini
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=your_model_name
+```
+
+**OpenAI Example:**
+```env
+AI_PROVIDER=openai
+OPENAI_API_KEY=your_openai_api_key
+OPENAI_MODEL=your_model_name
+```
+
+**Offline Mode:**
+```env
+AI_PROVIDER=mock
+```
+
+### AI Validation & Fallback
+
+- AI-generated questions are parsed and validated before saving.
+- Each question must contain exactly four answer options.
+- The correct answer index must be valid.
+- Duplicate options are rejected.
+- If AI generation fails or returns invalid output, NeuroLearn automatically falls back to the built-in offline question bank.
+
+**Note:** Model names are configurable through the respective environment variables. Update them if a model becomes unavailable or is retired. Never commit API keys or `.env` files to GitHub.
+
+
 
 ## API
 | Area | Endpoints |
