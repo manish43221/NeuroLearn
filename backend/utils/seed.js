@@ -224,7 +224,7 @@ async function seedDatabase() {
   console.log('Connecting to MongoDB...');
 
   await mongoose.connect(process.env.MONGO_URI, {
-    dbName: 'neuroLearn',
+    dbName: 'neurolearn',
   });
 
   console.log('Connected to database:', mongoose.connection.name);
