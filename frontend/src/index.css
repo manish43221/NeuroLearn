@@ -105,6 +105,12 @@ html.dark .nl-intro { background:#2B352B; border-color:#3E4B3D; }
 .nl-confidence-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin-top:28px; }
 .nl-big-number { display:block; margin:14px 0 4px; font-size:34px; font-weight:650; letter-spacing:-.04em; color:var(--ink); }
 @media(max-width:640px){.nl-intro{grid-template-columns:1fr;padding:22px}.nl-intro-aside{border-left:0;border-top:1px solid #C9D3C5;padding:15px 0 0}.nl-feature{grid-template-columns:32px 1fr 20px;gap:10px}.nl-plan,.nl-recommend{align-items:flex-start;flex-direction:column}.nl-rec-action{width:100%;justify-content:space-between}.nl-answer-row{flex-direction:column}.nl-heading-row{align-items:flex-start}}
+.memory-flashcard { min-height:220px; background:var(--surface); border-color:var(--line); transform-style:preserve-3d; transition:transform .45s ease,background-color .2s ease,border-color .2s ease; }
+.memory-flashcard:hover { border-color:var(--sage); }
+.memory-flashcard.is-revealed { transform:rotateX(180deg); background:var(--sage-soft); }
+.memory-flashcard > span { backface-visibility:hidden; }
+.memory-flashcard.is-revealed > span { transform:rotateX(180deg); }
+@media(prefers-reduced-motion:reduce){.memory-flashcard{transition:none}}
 /* ==============================
    NEUROLEARN DESIGN SYSTEM */
 
