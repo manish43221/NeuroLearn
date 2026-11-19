@@ -111,13 +111,27 @@ AI_PROVIDER=mock
 | Area | Endpoints |
 |---|---|
 | Auth | `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`, `PUT /api/auth/me` |
+<<<<<<< HEAD
 | Courses | `GET/POST /api/courses`, `GET/PUT/DELETE /api/courses/:id`, `GET /api/courses/my`, `POST/DELETE /api/courses/:id/enroll`, `POST/DELETE /api/courses/:id/lessons/:lessonId/complete` |
+=======
+| Courses | `GET /api/courses`, `GET /api/courses/categories`, `GET /api/courses/my`, `GET/POST /api/courses`, `GET/PUT/DELETE /api/courses/:id`, `POST/DELETE /api/courses/:id/enroll`, `POST/DELETE /api/courses/:id/lessons/:lessonId/complete` |
+| Assignments | `GET/POST /api/assignments`, `GET/PUT/DELETE /api/assignments/:id`, `GET /api/assignments/:id/submissions`, `POST /api/assignments/:id/submissions`, `GET /api/assignments/:id/submissions/me/file`, `GET /api/assignments/:id/submissions/:submissionId/file`, `PATCH /api/assignments/:id/submissions/:submissionId/evaluate` |
+>>>>>>> 38ed8cb (Implemented assignment management and submission)
 | Quizzes | `POST /api/quizzes/generate`, `GET /api/quizzes`, `GET /api/quizzes/:id`, `POST /api/quizzes/:id/submit`, `DELETE /api/quizzes/:id` |
 | Results | `GET /api/results`, `GET /api/results/:id`, `GET /api/results/stats`, `GET /api/results/weak-topics`, `GET /api/results/leaderboard` |
 | Memory Coach | `GET/POST /api/flashcards`, `GET /api/flashcards?due=true`, `POST /api/flashcards/generate`, `PATCH/DELETE /api/flashcards/:id`, `POST /api/flashcards/:id/reviews`, `GET /api/flashcards/stats` |
 | Admin | `GET /api/users`, `GET /api/users/overview`, `PUT /api/users/:id/role`, `DELETE /api/users/:id` |
 
 Send `Authorization: Bearer <token>` on all routes except register/login.
+
+Assignments are stored in MongoDB alongside their student submissions. Uploads accept PDF, DOCX, ZIP, and TXT files up to 10 MB; files are served only through authenticated, ownership-checked download routes. Teachers can manage assignments for their own courses, while students can view and submit work only for enrolled courses.
+
+Run the backend integration tests against an isolated MongoDB database whose name ends in `_test`:
+
+```powershell
+$env:TEST_MONGO_URI = "mongodb://127.0.0.1:27017/neurolearn_assignments_test"
+npm test
+```
 
 ## Deploy
 - Database: MongoDB Atlas → put  URI in `MONGO_URI`

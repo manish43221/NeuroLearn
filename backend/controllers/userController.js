@@ -2,6 +2,8 @@ const User = require('../models/User');
 const Course = require('../models/Course');
 const Quiz = require('../models/Quiz');
 const Result = require('../models/Result');
+const Assignment = require('../models/Assignment');
+const AssignmentSubmission = require('../models/AssignmentSubmission');
 const TeacherApplication = require('../models/TeacherApplication');
 const ApiError = require('../utils/ApiError');
 const asyncHandler = require('../utils/asyncHandler');
@@ -26,7 +28,14 @@ exports.deleteUser = asyncHandler(async (req, res) => {
   if (String(req.params.id) === String(req.user._id)) throw new ApiError(400, 'You cannot delete yourself');
   const user = await User.findById(req.params.id);
   if (!user) throw new ApiError(404, 'User not found');
-  await Promise.all([user.deleteOne(), Result.deleteMany({ user: user._id }), Quiz.deleteMany({ createdBy: user._id })]);
+  const assignmentIds = await Assignment.find({ teacher: user._id }).distinct('_id');
+  await Promise.all([
+    user.deleteOne(),
+    Result.deleteMany({ user: user._id }),
+    Quiz.deleteMany({ createdBy: user._id }),
+    AssignmentSubmission.deleteMany({ $or: [{ student: user._id }, { assignment: { $in: assignmentIds } }] }),
+    Assignment.deleteMany({ _id: { $in: assignmentIds } }),
+  ]);
   res.json({ message: 'User deleted' });
 });
 
