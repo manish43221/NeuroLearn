@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import api, { errMsg } from "../services/api";
-import CoursePicker from "../components/CoursePicker";
+import CoursePicker from "../components/coursepicker";
 
 // Initial tutor greeting
 const INITIAL_MESSAGE = {

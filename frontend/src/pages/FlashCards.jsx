@@ -12,7 +12,7 @@ import {
   YAxis,
 } from 'recharts';
 import api, { errMsg } from '../services/api';
-import CoursePicker from '../components/CoursePicker';
+import CoursePicker from '../components/coursepicker';
 
 const defaultStats = {
   totalCards: 0,
@@ -546,3 +546,4 @@ export default function Flashcards() {
     </div>
   );
 }
+5

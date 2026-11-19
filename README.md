@@ -48,24 +48,28 @@ npm run dev                 # http://localhost:5173
 `npm run seed` can be repeated and keeps existing non-demo data. The login page lists all six demo accounts and can fill their credentials for you.
 
 ## AI setup
-`AI_PROVIDER=mock` (default) works with no key using a built-in question bank (Arrays, Recursion, Sorting, Trees, SQL Joins, Normalization).
-For real AI on any topic set in `backend/.env`:
-- Gemini: `AI_PROVIDER=gemini`, `GEMINI_API_KEY=...` (free key: aistudio.google.com)
-- OpenAI: `AI_PROVIDER=openai`, `OPENAI_API_KEY=...`
-Model names live in `GEMINI_MODEL` / `OPENAI_MODEL`; change them if a model is retired.
-All AI output is parsed and validated (4 options, valid answer index, no duplicates) before saving; on failure the app falls back to the offline bank.
+Quiz generation and tutor features have separate provider settings. Both default to `openrouter`; without a configured key, AI requests fall back to offline/rule-based behavior where available.
+
+Set `QUIZ_PROVIDER` and `TUTOR_PROVIDER` independently in `backend/.env` to `openrouter`, `gemini`, `openai`, or `mock`. Configure the key for the selected provider:
+- OpenRouter: `OPENROUTER_API_KEY=...`
+- Gemini: `GEMINI_API_KEY=...`
+- OpenAI: `OPENAI_API_KEY=...`
+- Mock: no key; quiz generation uses the built-in question bank (Arrays, Recursion, Sorting, Trees, SQL Joins, Normalization).
+
+Optional model settings are `QUIZ_MODEL`, `TUTOR_MODEL`, `GEMINI_MODEL`, and `OPENAI_MODEL`. `OPENROUTER_JSON_MODE=true` enables OpenRouter JSON response mode for providers that support it. AI quiz output is validated before saving; generation attempts an offline question-bank fallback if the provider fails, provided enough matching offline questions exist. Tutor and study plan features also have offline/rule-based fallbacks.
 
 ## API
 | Area | Endpoints |
 |---|---|
 | Auth | `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`, `PUT /api/auth/me` |
-| Courses | `GET/POST /api/courses`, `GET/PUT/DELETE /api/courses/:id`, `GET /api/courses/my`, `POST/DELETE /api/courses/:id/enroll`, `POST/DELETE /api/courses/:id/lessons/:lessonId/complete` |
+| Courses | `GET /api/courses`, `GET /api/courses/categories`, `GET /api/courses/my`, `GET/POST /api/courses`, `GET/PUT/DELETE /api/courses/:id`, `POST/DELETE /api/courses/:id/enroll`, `POST/DELETE /api/courses/:id/lessons/:lessonId/complete` |
 | Quizzes | `POST /api/quizzes/generate`, `GET /api/quizzes`, `GET /api/quizzes/:id`, `POST /api/quizzes/:id/submit`, `DELETE /api/quizzes/:id` |
-| Results | `GET /api/results`, `GET /api/results/:id`, `GET /api/results/stats`, `GET /api/results/weak-topics`, `GET /api/results/leaderboard` |
+| Results | `GET /api/results`, `GET /api/results/:id`, `GET /api/results/stats`, `GET /api/results/confidence`, `GET /api/results/weak-topics`, `GET /api/results/leaderboard`, `GET /api/results/students` (teacher/admin) |
 | Memory Coach | `GET/POST /api/flashcards`, `GET /api/flashcards?due=true`, `POST /api/flashcards/generate`, `PATCH/DELETE /api/flashcards/:id`, `POST /api/flashcards/:id/reviews`, `GET /api/flashcards/stats` |
-| Admin | `GET /api/users`, `GET /api/users/overview`, `PUT /api/users/:id/role`, `DELETE /api/users/:id` |
+| AI | `POST /api/ai/tutor`, `POST /api/ai/study-plan`, `POST /api/ai/flashcards` |
+| Admin | `GET /api/users`, `GET /api/users/overview`, `GET /api/users/teacher-applications`, `POST /api/users/teacher-applications/:id/approve`, `POST /api/users/teacher-applications/:id/reject`, `PUT /api/users/:id/role`, `DELETE /api/users/:id` |
 
-Send `Authorization: Bearer <token>` on all routes except register/login.
+Send `Authorization: Bearer <token>` on all API routes except health, register, and login.
 
 ## Deploy
 - Database: MongoDB Atlas → put  URI in `MONGO_URI`
