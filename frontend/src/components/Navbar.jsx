@@ -17,6 +17,7 @@ const menu = [
       { to: '/courses', icon: '▦', label: 'Explore Courses' },
       { to: '/my-courses', icon: '▣', label: 'My Courses' },
       { to: '/quizzes', icon: '✎', label: 'AI Quizzes' },
+      { to: '/assignments', icon: '▧', label: 'Assignments' },
       { to: '/flashcards', icon: '▤', label: 'Memory Coach' },
     ],
   },

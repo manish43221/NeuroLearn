@@ -37,6 +37,7 @@ app.use('/api/auth', authLimiter, require('./routes/authRoutes'));
 app.use('/api/courses', require('./routes/courseRoutes'));
 app.use('/api/quizzes', require('./routes/quizRoutes'));
 app.use('/api/results', require('./routes/resultRoutes'));
+app.use('/api/assignments', require('./routes/assignmentRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/ai', require('./routes/airoutes'));
 app.use('/api/flashcards', require('./routes/flashcardRoutes'));

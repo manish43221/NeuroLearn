@@ -20,6 +20,7 @@ import Tutor from './pages/Tutor';
 import StudyPlan from './pages/StudyPlan';
 import Flashcards from './pages/FlashCards';
 import Students from './pages/Students';
+import Assignments from './pages/Assignments';
 import NeuroLab from './pages/neurolab/NeuroLab';
 import NeuroMap from './pages/neurolab/NeuroMap';
 import AdaptiveLearning from './pages/neurolab/AdaptiveLearning';
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/courses/new" element={<P roles={['teacher', 'admin']}><AddCourse /></P>} />
           <Route path="/courses/:id" element={<P><CourseDetail /></P>} />
           <Route path="/my-courses" element={<P><MyCourses /></P>} />
+          <Route path="/assignments" element={<P><Assignments /></P>} />
           <Route path="/quizzes" element={<P><Quizzes /></P>} />
           <Route path="/quiz/:id" element={<P><Quiz /></P>} />
           <Route path="/results/:id" element={<P><Result /></P>} />
