@@ -7,10 +7,10 @@ MERN stack (MongoDB, Express, React, Node) + JWT + AI quiz generation (Gemini / 
 neurolearn/
 ├── backend/
 │   ├── config/db.js
-│   ├── controllers/  auth, course, quiz, result, user
+│   ├── controllers/  ai, auth, course, quiz, flashcard, result, user
 │   ├── middleware/   auth (JWT + roles), error, sanitize, validate
-│   ├── models/       User, Course, Quiz, Result
-│   ├── routes/       auth, course, quiz, result, user
+│   ├── models/       User, Course, Quiz, Result, Teacherapplication, FlashCardReview
+│   ├── routes/       air, auth, course, quiz, flashcard, result, user
 │   ├── services/     aiService.js, questionBank.js
 │   ├── utils/        analytics.js, seed.js, token.js, ApiError.js, asyncHandler.js
 │   ├── server.js
@@ -18,11 +18,10 @@ neurolearn/
 │   └── package.json
 └── frontend/
     ├── src/
-    │   ├── components/ Navbar, ProtectedRoute, CourseCard, StatCard, ProgressBar, Loader
+    │   ├── components/ Neurolab- Confidencemeter, LearningCard, MasteryProgess  & Navbar, ProtectedRoute, CourseCard, Coursepicker StatCard, ProgressBar, Loader
     │   ├── context/    AuthContext, ThemeContext (dark mode)
-    │   ├── pages/      Landing, Login, Register, Dashboard, Courses, CourseDetail,
-    │   │               MyCourses, Quizzes, Quiz, Result, Performance, Profile, Manage, CourseForm
-    │   ├── services/api.js
+    │   ├── pages/     Neurolab- AdaptiveLearning, CodeThinkingLab, ConfidenceInsights, NeuroLab, NeuroMap & Landing, Login, Register, Dashboard, Courses, CourseDetail, CourseForm, Addcourse, MyCourses, Quizzes, Quiz, Result, Performance, FlashCards, Profile, Manage, CourseForm
+    │   ├── services/     api.js, neurolabservice.js
     │   ├── App.jsx, main.jsx, index.css
     ├── index.html, vite.config.js, tailwind.config.js, postcss.config.js
     └── package.json
