@@ -1,5 +1,7 @@
 const Course = require('../models/Course');
 const Quiz = require('../models/Quiz');
+const Assignment = require('../models/Assignment');
+const AssignmentSubmission = require('../models/AssignmentSubmission');
 const User = require('../models/User');
 const ApiError = require('../utils/ApiError');
 const asyncHandler = require('../utils/asyncHandler');
@@ -99,9 +101,12 @@ exports.deleteCourse = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.id);
   if (!course) throw new ApiError(404, 'Course not found');
   if (!canModify(req.user, course)) throw new ApiError(403, 'You can only delete your own courses');
+  const assignmentIds = await Assignment.find({ course: course._id }).distinct('_id');
   await Promise.all([
     course.deleteOne(),
     Quiz.deleteMany({ course: course._id }),
+    AssignmentSubmission.deleteMany({ assignment: { $in: assignmentIds } }),
+    Assignment.deleteMany({ _id: { $in: assignmentIds } }),
     User.updateMany({}, { $pull: { enrollments: { course: course._id } } }),
   ]);
   res.json({ message: 'Course deleted' });
